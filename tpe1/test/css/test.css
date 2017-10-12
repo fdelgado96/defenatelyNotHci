@@ -1,0 +1,9 @@
+.active a{
+            color: #1e90ff !important; /*El important no se como solucionarlo*/
+        }
+        a{
+        	color: #FFFFFE !important;
+        }
+.top-buffer { 
+			margin-top: 50px ; 
+		}
