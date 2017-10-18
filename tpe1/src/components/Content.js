@@ -1,9 +1,10 @@
 import React from 'react';
+import General from './General'
 
 export default function (props) {
     switch (props.view) {
         case "general":
-            return <h1>Tamo en general</h1>;
+            return <General />;
         case "cocina":
             return <h1>Tamo en cocina</h1>;
         default:

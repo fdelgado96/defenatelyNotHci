@@ -1,0 +1,28 @@
+
+.full-page {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.menu-container {
+    height: 100%;
+}
+
+.menu-item {
+    text-align: center;
+}
+
+.menu-img {
+    width: 80%;
+}
+
+.menu-text {
+    padding-top: 20px;
+    color: #0094FF;
+    font-weight: bold;
+}
