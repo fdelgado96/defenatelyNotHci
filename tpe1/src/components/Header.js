@@ -8,20 +8,13 @@ export default class Header extends Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-        this.setActive = this.setActive.bind(this);
         this.state = {
-            isOpen: false,
-            active: "general"
+            isOpen: false
         };
     }
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
-        });
-    }
-    setActive(item) {
-        this.setState({
-            active: item
         });
     }
     render() {
@@ -33,28 +26,28 @@ export default class Header extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink active={this.state.active === "general"} onClick={()=>this.setActive("general")} href="#">GENERAL</NavLink>
+                                <NavLink active={this.props.active === "general"} onClick={()=>this.props.callback("general")} href="#">GENERAL</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "cocina"} onClick={()=>this.setActive("cocina")} href="#">COCINA</NavLink>
+                                <NavLink active={this.props.active === "cocina"} onClick={()=>this.props.callback("cocina")} href="#">COCINA</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "living"} onClick={()=>this.setActive("living")} href="#">LIVING</NavLink>
+                                <NavLink active={this.props.active === "living"} onClick={()=>this.props.callback("living")} href="#">LIVING</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "dormitorios"} onClick={()=>this.setActive("dormitorios")} href="#">DORMITORIOS</NavLink>
+                                <NavLink active={this.props.active === "dormitorios"} onClick={()=>this.props.callback("dormitorios")} href="#">DORMITORIOS</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "lavadero"} onClick={()=>this.setActive("lavadero")} href="#">LAVADERO</NavLink>
+                                <NavLink active={this.props.active === "lavadero"} onClick={()=>this.props.callback("lavadero")} href="#">LAVADERO</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "baños"} onClick={()=>this.setActive("baños")} href="#">BAÑOS</NavLink>
+                                <NavLink active={this.props.active === "baños"} onClick={()=>this.props.callback("baños")} href="#">BAÑOS</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "administracion"} onClick={()=>this.setActive("administracion")} href="#">ADMINISTRACIÓN</NavLink>
+                                <NavLink active={this.props.active === "administracion"} onClick={()=>this.props.callback("administracion")} href="#">ADMINISTRACIÓN</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={this.state.active === "ayuda"} onClick={()=>this.setActive("ayuda")} href="#">AYUDA</NavLink>
+                                <NavLink active={this.props.active === "ayuda"} onClick={()=>this.props.callback("ayuda")} href="#">AYUDA</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>
