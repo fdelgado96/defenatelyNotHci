@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import logo from '../images/logo.png';
+import "../css/Header.css"
 
 export default class Header extends Component {
     constructor(props) {
         super(props);
 
         this.toggle = this.toggle.bind(this);
+        this.setActive = this.setActive.bind(this);
         this.state = {
-            isOpen: false
+            isOpen: false,
+            active: "general"
         };
     }
     toggle() {
@@ -16,37 +19,42 @@ export default class Header extends Component {
             isOpen: !this.state.isOpen
         });
     }
+    setActive(item) {
+        this.setState({
+            active: item
+        });
+    }
     render() {
         return (
             <div>
                 <Navbar color="dark" dark expand="md">
-                    <NavbarBrand href="#"><img src={logo} /></NavbarBrand>
+                    <NavbarBrand href="#"><img src={logo} className="logo" alt="logo"/></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="#">GENERAL</NavLink>
+                                <NavLink active={this.state.active === "general"} onClick={()=>this.setActive("general")} href="#">GENERAL</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">COCINA</NavLink>
+                                <NavLink active={this.state.active === "cocina"} onClick={()=>this.setActive("cocina")} href="#">COCINA</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">LIVING</NavLink>
+                                <NavLink active={this.state.active === "living"} onClick={()=>this.setActive("living")} href="#">LIVING</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">DORMITORIOS</NavLink>
+                                <NavLink active={this.state.active === "dormitorios"} onClick={()=>this.setActive("dormitorios")} href="#">DORMITORIOS</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">LAVADERO</NavLink>
+                                <NavLink active={this.state.active === "lavadero"} onClick={()=>this.setActive("lavadero")} href="#">LAVADERO</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">BAÑOS</NavLink>
+                                <NavLink active={this.state.active === "baños"} onClick={()=>this.setActive("baños")} href="#">BAÑOS</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">ADMINISTRACIÓN</NavLink>
+                                <NavLink active={this.state.active === "administracion"} onClick={()=>this.setActive("administracion")} href="#">ADMINISTRACIÓN</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="#">AYUDA</NavLink>
+                                <NavLink active={this.state.active === "ayuda"} onClick={()=>this.setActive("ayuda")} href="#">AYUDA</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>
