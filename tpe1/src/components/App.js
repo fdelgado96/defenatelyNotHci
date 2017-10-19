@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import logo from '../images/logo.svg';
 import '../css/App.css';
 import Header from './Header'
+import Ambiente from "./Ambiente";
+import './Api';
+import './room';
 import Content from './Content'
 
 class App extends Component {
