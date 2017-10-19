@@ -8,17 +8,17 @@ class Ambiente extends React.Component {
     render(){
         return (
             <div>
-                <div class="container row">
-                    <div class="col-lg-6">
+                <div className="container row">
+                    <div className="col-lg-6">
                         <h1>Dispositivos</h1>
                         <Dispositivos id={this.state.id} />
                     </div>
-                    <div class="col-lg-6">
-                        <div class="row">
+                    <div className="col-lg-6">
+                        <div className="row">
                             <h1>Funciones Personalizadas</h1>
                             {/*<FunscionsPersonalizadas idAmbiente={this.state.id} />*/}
                         </div>
-                        <div class="row">
+                        <div className="row">
                             <h1>Rutinas</h1>
                             {/*<Rutinas idAmbiente={this.state.id} />*/}
                         </div>

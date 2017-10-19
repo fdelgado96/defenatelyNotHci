@@ -33,11 +33,14 @@ class Dispositivos extends React.Component{
 function Dispositivo(props){
 
     return(
-        <div class="input-group">
-            <span class="input-group-addon" >{props.name}</span>
-            <input type="checkbox" checked data-toggle="toggle" id="on/off button"/> //tiene que prender y apagar
-            <button type="button" class="btn">
-                <span class="glyphicon glyphicon-cog"></span>
+        <div className="input-group">
+            <span className="input-group-addon" >{props.name}</span>
+            <label className="switch">
+                <input type="checkbox"></input>
+                    <span className="slider round"></span>
+            </label>
+            <button type="button" className="btn">
+                <span className="glyphicon glyphicon-cog"></span>
             </button>
         </div>
     );
