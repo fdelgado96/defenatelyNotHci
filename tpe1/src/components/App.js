@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import '../css/App.css';
 import Header from './Header'
 import Ambiente from "./Ambiente";
-import './api';
-import './room';
+import '../api';
+import '../room';
 import Content from './Content'
 
 class App extends Component {
