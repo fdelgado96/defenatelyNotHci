@@ -1,5 +1,5 @@
 import React from 'react';
-import api from './Api';
+import api from './api';
 
 class Dispositivos extends React.Component{
     constructor(props){
