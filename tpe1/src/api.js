@@ -10,7 +10,7 @@ var api = class {
     static get timeout() {
         return 60 * 1000;
     }
-}
+};
 api.room = class{
     static get url(){
         return api.baseUrl + "rooms/"
@@ -62,7 +62,68 @@ api.room = class{
             timeout: api.timeout
         })
     }
+};
+api.routine = class{
+    static get url(){
+        return api.baseUrl + "routines/"
+    }
 
-}
+    static list() {
+        return $.ajax({
+            url: api.routine.url,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static add(routine) {
+        return $.ajax({
+            url: api.routine.url,
+            method: "POST",
+            dataType: "json",
+            timeout: api.timeout,
+            data: routine
+        });
+    }
+
+    static modify(routine) {
+        return $.ajax({
+            url: api.routine.url + routine.id,
+            method: "PUT",
+            dataType: "json",
+            timeout: api.timeout,
+            data: routine
+        });
+    }
+
+    static delete(id) {
+        return $.ajax({
+            url: api.routine.url + id,
+            method: "DELETE",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static get(id) {
+        return $.ajax({
+            url: api.routine.url + id,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static execute(id) {
+        return $.ajax({
+            url: api.routine.url + id + '/execute',
+            method: "PUT",
+            dataType: "json",
+            timeout: api.timeout,
+            data: {}
+        });
+    }
+};
 export default api;
 
