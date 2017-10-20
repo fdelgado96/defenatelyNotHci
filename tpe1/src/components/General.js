@@ -10,6 +10,11 @@ export default class General extends Component {
             activeView: "menu"
         };
     }
+    componentWillReceiveProps() {
+        this.setState({
+            activeView: "menu"
+        });
+    }
     setView(view) {
         this.setState({
             activeView: view
