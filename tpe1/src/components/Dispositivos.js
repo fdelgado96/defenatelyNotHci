@@ -24,6 +24,20 @@ class Dispositivos extends React.Component{
 
 
     }
+    /*
+    render(){  Me parece que deberia ser asi esta funcion, el key se tiene que pasar si o si para evitar una warning
+
+        const listDevices = this.state.devices.map((device) => {
+            return (
+                <li>
+                     <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id} />
+                </li>
+            )
+         });
+
+    return <ul>{listDevices}</ul>;
+    }
+    */
 
    render(){
         console.log(this.state.devices);
