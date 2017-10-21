@@ -10,12 +10,12 @@ class Ambiente extends React.Component {
     render(){
         return (
             <div>
-                <div className="container row">
-                    <div className="col-lg-6">
+                <div className="container row mx-auto">
+                    <div className="col-lg-6 mx-auto">
                         <h1>Dispositivos</h1>
                         <Dispositivos id={this.state.id} />
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 mx-auto">
                         <h1>Funciones Personalizadas</h1>
                         <Funciones room={this.props.id}/>
                     </div>

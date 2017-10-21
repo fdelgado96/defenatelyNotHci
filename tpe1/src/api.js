@@ -62,6 +62,16 @@ api.room = class{
             timeout: api.timeout
         })
     }
+
+    static getDeviceType(id) {
+        return $.ajax({
+            url: api.baseUrl + "devicetypes/"+ id,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        })
+    }
+
 };
 api.routines = class{
     static get url(){
