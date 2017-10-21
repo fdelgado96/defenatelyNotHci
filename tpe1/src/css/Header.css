@@ -5,3 +5,13 @@
 .logo {
     width: 50px;
 }
+
+.brand {
+    position: relative;
+    padding-left: 10px;
+    top: 5px;
+}
+
+.brand-colored {
+    color: #0094FF;
+}
