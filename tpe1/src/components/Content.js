@@ -8,6 +8,8 @@ export default function (props) {
             return <General />;
         case "cocina":
             return <Ambiente id="b398aa66327c56bd"/>;
+        case "ayuda":
+            return <HelpBoard />;
         default:
             return <h1>Me dio paja hacer todos</h1>;
     }
