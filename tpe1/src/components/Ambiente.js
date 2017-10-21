@@ -1,5 +1,7 @@
 import React from 'react';
 import Dispositivos from "./Dispositivos";
+import Funciones from './Funciones';
+
 class Ambiente extends React.Component {
     constructor(props){
         super(props)
@@ -14,14 +16,8 @@ class Ambiente extends React.Component {
                         <Dispositivos id={this.state.id} />
                     </div>
                     <div className="col-lg-6">
-                        <div className="row">
-                            <h1>Funciones Personalizadas</h1>
-                            {/*<FunscionsPersonalizadas idAmbiente={this.state.id} />*/}
-                        </div>
-                        <div className="row">
-                            <h1>Rutinas</h1>
-                            {/*<Rutinas idAmbiente={this.state.id} />*/}
-                        </div>
+                        <h1>Funciones Personalizadas</h1>
+                        <Funciones room={this.props.id}/>
                     </div>
                 </div>
             </div>

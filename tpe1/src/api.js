@@ -63,14 +63,14 @@ api.room = class{
         })
     }
 };
-api.routine = class{
+api.routines = class{
     static get url(){
         return api.baseUrl + "routines/"
     }
 
     static list() {
         return $.ajax({
-            url: api.routine.url,
+            url: api.routines.url,
             method: "GET",
             dataType: "json",
             timeout: api.timeout
@@ -79,7 +79,7 @@ api.routine = class{
 
     static add(routine) {
         return $.ajax({
-            url: api.routine.url,
+            url: api.routines.url,
             method: "POST",
             dataType: "json",
             timeout: api.timeout,
@@ -89,7 +89,7 @@ api.routine = class{
 
     static modify(routine) {
         return $.ajax({
-            url: api.routine.url + routine.id,
+            url: api.routines.url + routine.id,
             method: "PUT",
             dataType: "json",
             timeout: api.timeout,
@@ -99,7 +99,7 @@ api.routine = class{
 
     static delete(id) {
         return $.ajax({
-            url: api.routine.url + id,
+            url: api.routines.url + id,
             method: "DELETE",
             dataType: "json",
             timeout: api.timeout
@@ -108,7 +108,7 @@ api.routine = class{
 
     static get(id) {
         return $.ajax({
-            url: api.routine.url + id,
+            url: api.routines.url + id,
             method: "GET",
             dataType: "json",
             timeout: api.timeout
@@ -117,7 +117,7 @@ api.routine = class{
 
     static execute(id) {
         return $.ajax({
-            url: api.routine.url + id + '/execute',
+            url: api.routines.url + id + '/execute',
             method: "PUT",
             dataType: "json",
             timeout: api.timeout,

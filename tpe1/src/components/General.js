@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Menu from './Menu';
+import Automatizacion from './Automatizacion';
 
 export default class General extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ export default class General extends Component {
             case "temperatura":
                 return <h1>Temperatura</h1>;
             case "automatizacion":
-                return <h1>Automatización</h1>;
+                return <Automatizacion />;
             default:
                 return <h1>La cagamo</h1>;
         }
