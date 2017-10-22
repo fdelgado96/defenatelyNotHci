@@ -5,8 +5,10 @@ import Funciones from './Funciones';
 
 class Ambiente extends React.Component {
     constructor(props){
-        super(props)
-        this.state ={id: props.id} //por props viene el tipo de ambiente y se renderiza ese ambiente
+        super(props);
+        this.state = {      //por props viene el tipo de ambiente y se renderiza ese ambiente
+            id: props.id
+        };
     }
     render(){
         return (
@@ -27,12 +29,5 @@ class Ambiente extends React.Component {
 
 
 }
-//
-// function GetDispositivos(props) {
-//     var room = api.room.get(this.state.id);
-//
-//
-// }
-
 
 export default Ambiente;

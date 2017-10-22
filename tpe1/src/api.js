@@ -16,6 +16,15 @@ api.room = class{
         return api.baseUrl + "rooms/"
     }
 
+    static list() {
+        return $.ajax({
+            url: api.room.url,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
     static add(room) {
         return $.ajax({
             url: api.room.url,
@@ -168,5 +177,83 @@ api.routines = class{
         });
     }
 };
+
+api.devices = class{
+    static get url(){
+        return api.baseUrl + "devices/"
+    }
+
+    static list() {
+        return $.ajax({
+            url: api.devices.url,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static add(device) {
+        return $.ajax({
+            url: api.devices.url,
+            method: "POST",
+            dataType: "json",
+            timeout: api.timeout,
+            data: device
+        });
+    }
+
+    static modify(device) {
+        return $.ajax({
+            url: api.devices.url + device.id,
+            method: "PUT",
+            dataType: "json",
+            timeout: api.timeout,
+            data: device
+        });
+    }
+
+    static delete(id) {
+        return $.ajax({
+            url: api.devices.url + id,
+            method: "DELETE",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static get(id) {
+        return $.ajax({
+            url: api.devices.url + id,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+};
+
+api.deviceTypes = class{
+    static get url(){
+        return api.baseUrl + "deviceTypes/"
+    }
+
+    static list() {
+        return $.ajax({
+            url: api.deviceTypes.url,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static get(id) {
+        return $.ajax({
+            url: api.deviceTypes.url + id,
+            method: "GET",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+};
+
 export default api;
 
