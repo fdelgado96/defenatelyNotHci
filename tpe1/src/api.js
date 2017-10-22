@@ -63,16 +63,49 @@ api.room = class{
         })
     }
 
+};
+
+api.deviceTypes = class{
+    static get url(){
+        return api.baseUrl + "devicetypes/"
+    }
+
     static getDeviceType(id) {
         return $.ajax({
-            url: api.baseUrl + "devicetypes/"+ id,
+            url: api.deviceTypes.url + id,
             method: "GET",
             dataType: "json",
             timeout: api.timeout
         })
     }
+}
 
-};
+api.devices = class{
+    static get url(){
+        return api.baseUrl + "devices/"
+    }
+
+    static putDevice(deviceId, actionName, params){
+        return $.ajax({
+            url: api.devices.url + deviceId+"/"+actionName,
+            method: "PUT",
+            dataType: "text",
+            contentType:"application/json",
+            timeout: api.timeout,
+            data: params
+        });
+    }
+
+    static getState(deviceId){
+        return $.ajax({
+            url: api.devices.url + deviceId +"/getState",
+            method: "PUT",
+            dataType:"json",
+            timeout: api.timeout
+        })
+    }
+
+}
 api.routines = class{
     static get url(){
         return api.baseUrl + "routines/"

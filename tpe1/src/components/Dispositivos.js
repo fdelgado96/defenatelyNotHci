@@ -1,8 +1,10 @@
 import React from 'react';
 import api from '../api';
 import cog from '../images/cog.png';
-import PopUpDispositivo from './PopUpDispositivo';
-import {Button, Modal ,ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import {Modal} from 'reactstrap';
+import * as $ from "jquery";
+import PopUpLamp from './PopUpLamp';
+import PopUpOven from './PopUpOven';
 
 
 class Dispositivos extends React.Component{
@@ -12,10 +14,8 @@ class Dispositivos extends React.Component{
     }
 
     componentWillMount(){
-        console.log("props id mount " +this.props.id)
         api.room.getDevices(this.props.id)
             .done((data) => {
-                console.log(this)
                 this.setState({devices : data.devices});
             })
             .fail(() => {console.log("failed")}
@@ -24,25 +24,15 @@ class Dispositivos extends React.Component{
 
 
     }
-    /*
-    render(){  Me parece que deberia ser asi esta funcion, el key se tiene que pasar si o si para evitar una warning
-
-        const listDevices = this.state.devices.map((device) => {
-            return (
-                <li>
-                     <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id} />
-                </li>
-            )
-         });
-
-    return <ul>{listDevices}</ul>;
-    }
-    */
 
    render(){
-        console.log(this.state.devices);
-       const listDevices = this.state.devices.map((device) =>
-           <Dispositivo name={device.name} typeId={device.typeId} id={device.id}/>)
+       const listDevices = this.state.devices.map((device) => {
+           return (
+               <li>
+                   <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id}/>
+               </li>
+           )
+       });
        return <ul>{listDevices}</ul>;
 
    };
@@ -53,6 +43,7 @@ class Dispositivo extends React.Component{
         super(props)
         this.state = {open: false}
         this.handleClick = this.handleClick.bind(this);
+        this.closeModal =this.closeModal.bind(this);
     }
 
     handleClick()
@@ -60,15 +51,11 @@ class Dispositivo extends React.Component{
         this.setState({open:true});
     }
 
+    closeModal = () => this.setState({ open: false })
+
+
     render() {
         console.log(this.props.name);
-        let closeModal = () => this.setState({ open: false })
-
-        let saveAndClose = () => {
-            // api.saveData()
-            //     .then(() =>
-                this.setState({ open: false });
-        }
 
         return(
             <div>
@@ -84,20 +71,27 @@ class Dispositivo extends React.Component{
                     </button>
                 </div>
 
-                <Modal isOpen={this.state.open} onExit={closeModal} aria-labelledby={this.props.id+"Modal"}>
-                    <ModalHeader closeButton>{this.props.name}</ModalHeader>
-                    <ModalBody>
-                        <PopUpDispositivo typeId={this.props.typeId}/>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-primary" onClick={closeModal}>Close</button>
-                        <button className="btn btn-primary" onClick={saveAndClose}>Save</button>
-                    </ModalFooter>
+                <Modal isOpen={this.state.open} onExit={this.closeModal} aria-labelledby={this.props.id+"Modal"}>
+                    <PopUpSelector  id ={this.props.id} typeId={this.props.typeId} name={this.props.name}  closeModal ={this.closeModal}/>
                 </Modal>
 
             </div>
         );
     };
+}
+
+function PopUpSelector(props){
+    switch(props.typeId){
+        case "go46xmbqeomjrsjr":
+            return <PopUpLamp id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
+        case "im77xxyulpegfmv8":
+            return <PopUpOven id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
+        default:
+            return <p>no existe el dispositivo</p>
+    }
+
 }
 export default Dispositivos;
 

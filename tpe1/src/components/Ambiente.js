@@ -2,6 +2,7 @@ import React from 'react';
 import Dispositivos from "./Dispositivos";
 import Funciones from './Funciones';
 
+
 class Ambiente extends React.Component {
     constructor(props){
         super(props)
