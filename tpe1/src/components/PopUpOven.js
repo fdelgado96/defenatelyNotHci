@@ -2,6 +2,8 @@ import  React from "react";
 import api from '../api';
 import {Button, ButtonGroup, Form, Input, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 
+import "../css/activationSlider.css"
+import "../css/Slider.css"
 
 class PopUpOven extends React.Component{
 
@@ -21,7 +23,7 @@ class PopUpOven extends React.Component{
         this.setConvectionMode = this.setConvectionMode.bind(this);
         this.handleStatusChange= this.handleStatusChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.setTemperature = this.setTemperature.bind(this);
 
     }
 
@@ -46,27 +48,40 @@ class PopUpOven extends React.Component{
     }
 
     setHeatMode(event){
-        this.setState({heat: event.name})
+        this.setState({heat: event.target.name});
+    }
+
+    setTemperature(event){
+        this.setState({temperature: event.target.value});
     }
 
     setGrillMode(event){
-        this.setState({grill: event.name})
+        this.setState({grill: event.target.name});
     }
 
     setConvectionMode(event){
-        this.setState({convection: event.name})
+        this.setState({convection: event.target.name});
     }
 
     handleStatusChange(event){
         if(event.checked)
-            this.setState({status: "on"})
+            this.setState({status: "on"});
         else
-            this.setState({status: "off"})
+            this.setState({status: "off"});
     }
 
     handleSubmit(event){
         event.preventDefault();
+        if(this.state.status === "on") {
+            api.devices.putDevice(this.state.id, "turnOn","");
+            console.log("in if: "+this.state.status);
+        }
+        else
+            api.devices.putDevice(this.state.id,"turnOff","");
 
+        api.devices.putDevice(this.state.id,"setTemperature","["+18+"]")
+        //faltan mas, pero primero hay que arreglar popuplamp
+        this.props.closeModal();
 
     }
 
@@ -103,6 +118,7 @@ class PopUpOven extends React.Component{
                     </div>
                     <div className="">
                         <h6>Temperature:</h6>
+                        <Input type="range" className="Slider" min={this.state.minTemp} max={this.state.maxTemp} onChange={this.setTemperature}/>
                     </div>
                     <div className="">
                         <h6>Activar</h6>
@@ -115,8 +131,9 @@ class PopUpOven extends React.Component{
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <input type="submit" className="btn btn-primary" value="Submit" />
-                    <Button color="primary" onClick={this.props.closeModal}>Close</Button>
+                    <Button color="primary" onClick={this.props.closeModal}>Cerrar</Button>
+                    <input type="submit" className="btn btn-primary" value="Guardar" />
+
                 </ModalFooter>
             </Form>
         )

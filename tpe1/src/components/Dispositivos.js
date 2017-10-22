@@ -1,7 +1,7 @@
 import React from 'react';
 import api from '../api';
-import cog from '../images/cog.png';
-import {Modal} from 'reactstrap';
+import orangeCog from '../images/orangeCog.png';
+import {Modal, ModalBody, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
 import * as $ from "jquery";
 import PopUpLamp from './PopUpLamp';
 import PopUpOven from './PopUpOven';
@@ -28,12 +28,12 @@ class Dispositivos extends React.Component{
    render(){
        const listDevices = this.state.devices.map((device) => {
            return (
-               <li>
+               <ListGroupItem>
                    <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id}/>
-               </li>
+               </ListGroupItem>
            )
        });
-       return <ul>{listDevices}</ul>;
+       return <ListGroup>{listDevices}</ListGroup>;
 
    };
 }
@@ -60,16 +60,15 @@ class Dispositivo extends React.Component{
         return(
             <div>
 
-                <div className="input-group">
-                    <span className="input-group-addon">{this.props.name}</span>
-                    <label className="switch">
-                        <input type="checkbox"/>
-                        <span className="slider round"/>
-                    </label>
-                    <button type="button" className="btn" onClick={this.handleClick}>
-                        <img src={cog} width="20" alt="cog"/>
-                    </button>
-                </div>
+                <ListGroup className="input-group-lg">
+                    <ListGroupItemHeading>{this.props.name}</ListGroupItemHeading>
+                    <ListGroupItem>
+                        <button type="button" className="btn col-lg-12 btn-primary" onClick={this.handleClick}>
+                            <span className="text-center">Modificar </span>
+                            <img src={orangeCog} width="20" alt="cog"/>
+                        </button>
+                    </ListGroupItem>
+                </ListGroup>
 
                 <Modal isOpen={this.state.open} onExit={this.closeModal} aria-labelledby={this.props.id+"Modal"}>
                     <PopUpSelector  id ={this.props.id} typeId={this.props.typeId} name={this.props.name}  closeModal ={this.closeModal}/>
@@ -89,7 +88,12 @@ function PopUpSelector(props){
             return <PopUpOven id={props.id} name={props.name} closeModal={props.closeModal}/>;
 
         default:
-            return <p>no existe el dispositivo</p>
+            return (
+                <ModalBody>
+                    <h1>No existe dispositivo</h1>
+                    <button className="btn btn-primary" onClick={props.closeModal}>cerrar</button>
+                </ModalBody>
+            );
     }
 
 }

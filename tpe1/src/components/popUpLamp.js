@@ -77,8 +77,9 @@ class PopUpLamp extends React.Component{
         else
             api.devices.putDevice(this.state.id,"turnOff","");
 
-        api.devices.putDevice(this.state.id,"changeBrightness","["+18+"]")
-        api.devices.putDevice(this.state.id,"changeColor",JSON.stringify([this.state.color.substring(1)]))
+        api.devices.putDevice(this.state.id,"changeBrightness","["+18+"]");
+        api.devices.putDevice(this.state.id,"changeColor",JSON.stringify([this.state.color.substring(1)]));
+        this.props.closeModal();
     }
 
 
@@ -88,21 +89,27 @@ class PopUpLamp extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <ModalHeader>{this.props.name}</ModalHeader>
                 <ModalBody>
-                        <p>Brightness</p>
+                    <div>
+                        <h6>Brightness</h6>
                         <input type="range" className="input-group form-control-range" name="brightness" min={this.state.minBrightness} max={this.state.maxBrightness} onChange={this.handleBrightnessChange}/>
-                        <p>Activar</p>
+                    </div>
+                    <div>
+                        <h6>Activar</h6>
                         <div className="input-group">
                             <label className="switch">
                                 <input type="checkbox" name="activarLampara" defaultChecked={this.state.status === "on" ? "checked" : "unchecked"} onChange={this.handleStatusChange}/>
                                 <span className="slider round"/>
                             </label>
                         </div>
-                        <p>Color:</p>
+                    </div>
+                    <div>
+                        <h6>Color:</h6>
                         <CirclePicker color={this.state.color} onChangeComplete={this.handleColorChange}/>
+                    </div>
                 </ModalBody>
                 <ModalFooter>
-                    <input type="submit" className="btn btn-primary" value="Submit" />
-                    <button className="btn btn-primary" onClick={this.props.closeModal}>close</button>
+                    <button className="btn btn-primary" onClick={this.props.closeModal}>Cerrar</button>
+                    <input type="submit" className="btn btn-primary" value="Guardar"/>
                 </ModalFooter>
             </Form>
         );
