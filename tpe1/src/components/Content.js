@@ -9,7 +9,7 @@ export default function (props) {
         case "cocina":
             return <Ambiente id="b398aa66327c56bd"/>;
         case "ayuda":
-            return <HelpBoard />;
+            return <p />;
         default:
             return <h1>Me dio paja hacer todos</h1>;
     }
