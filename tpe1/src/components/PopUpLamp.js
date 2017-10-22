@@ -5,7 +5,8 @@ import { CirclePicker } from 'react-color';
 
 
 import "../css/activationSlider.css"
-
+import "../css/PopUp.css"
+import "../css/Slider.css"
 
 class PopUpLamp extends React.Component{
     constructor(props) {
@@ -43,8 +44,7 @@ class PopUpLamp extends React.Component{
 
     }
 
-    handleStatusChange(event){
-
+    handleStatusChange(){
         if(this.state.status === "on"){
             this.setState({status: "off"});
             console.log("changed to"+this.state.status)
@@ -52,7 +52,6 @@ class PopUpLamp extends React.Component{
         else{
             this.setState({status: "on"});
             console.log("changed to"+this.state.status)
-
         }
     }
 
@@ -70,39 +69,46 @@ class PopUpLamp extends React.Component{
 
         console.log(this.state.status);
         console.log(this.state.id)
-        if(this.state.status === "on") {
-            api.devices.putDevice(this.state.id, "turnOn","");
-            console.log("in if: "+this.state.status);
-        }
-        else
-            api.devices.putDevice(this.state.id,"turnOff","");
 
-        api.devices.putDevice(this.state.id,"changeBrightness","["+18+"]");
-        api.devices.putDevice(this.state.id,"changeColor",JSON.stringify([this.state.color.substring(1)]));
+
+        api.devices.putDevice(this.state.id,"changeBrightness",[this.state.brightness])
+        .always(()=>
+            api.devices.putDevice(this.state.id,"changeColor",[this.state.color.substring(1)])
+                .always(()=> {
+                    if (this.state.status === "on") {
+                        api.devices.putDevice(this.state.id, "turnOn", []);
+                        console.log("in if: " + this.state.status);
+                    }
+                    else
+                        api.devices.putDevice(this.state.id, "turnOff", []);
+                })
+        );
+
+
         this.props.closeModal();
     }
 
 
     render(){
-
+        console.log(this.state.status)
         return(
             <Form onSubmit={this.handleSubmit}>
                 <ModalHeader>{this.props.name}</ModalHeader>
                 <ModalBody>
-                    <div>
+                    <div className="popup-item">
                         <h6>Brightness</h6>
-                        <input type="range" className="input-group form-control-range" name="brightness" min={this.state.minBrightness} max={this.state.maxBrightness} onChange={this.handleBrightnessChange}/>
+                        <input type="range" className="input-group form-control-range" value={this.state.brightness} name="brightness" min={this.state.minBrightness} max={this.state.maxBrightness} onChange={this.handleBrightnessChange}/>
                     </div>
-                    <div>
+                    <div className="popup-item">
                         <h6>Activar</h6>
                         <div className="input-group">
-                            <label className="switch">
-                                <input type="checkbox" name="activarLampara" defaultChecked={this.state.status === "on" ? "checked" : "unchecked"} onChange={this.handleStatusChange}/>
+                            <label className="switch active">
+                                <input type="checkbox" name="activarLampara"  checked={this.state.status === "on" ? "checked" : ""} onChange={this.handleStatusChange}/>
                                 <span className="slider round"/>
                             </label>
                         </div>
                     </div>
-                    <div>
+                    <div className="popup-item">
                         <h6>Color:</h6>
                         <CirclePicker color={this.state.color} onChangeComplete={this.handleColorChange}/>
                     </div>

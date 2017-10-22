@@ -95,13 +95,14 @@ api.devices = class{
     }
 
     static putDevice(deviceId, actionName, params){
+        let stringParams = JSON.stringify(params);
         return $.ajax({
             url: api.devices.url + deviceId+"/"+actionName,
             method: "PUT",
             dataType: "text",
             contentType:"application/json",
             timeout: api.timeout,
-            data: params
+            data: stringParams
         });
     }
 

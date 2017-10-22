@@ -5,6 +5,10 @@ import {Modal, ModalBody, ListGroup, ListGroupItem, ListGroupItemHeading, ListGr
 import * as $ from "jquery";
 import PopUpLamp from './PopUpLamp';
 import PopUpOven from './PopUpOven';
+import PopUpAC from './PopUpAC';
+import PopUpDoor from './PopUpDoor';
+import PopUpRefrigerator from './PopUpRefrigerador';
+
 
 
 class Dispositivos extends React.Component{
@@ -55,8 +59,6 @@ class Dispositivo extends React.Component{
 
 
     render() {
-        console.log(this.props.name);
-
         return(
             <div>
 
@@ -87,6 +89,24 @@ function PopUpSelector(props){
         case "im77xxyulpegfmv8":
             return <PopUpOven id={props.id} name={props.name} closeModal={props.closeModal}/>;
 
+        case "li6cbv5sdlatti0j":
+            return<PopUpAC id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
+        case"lsf78ly0eqrjbz91":
+            return <PopUpDoor id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
+        // case "mxztsyjzsrq7iaqc":
+        //     return <PopUpAlarm id={props.id} name={props.name} closeModal={props.closeModal}/>;
+        //
+        // case "ofglvd9gqX8yfl3l":
+        //     return <PopUpTimer id={props.id} name={props.name} closeModal={props.closeModal}/>;
+        //
+        case "rnizejqr2di0okho":
+            return <PopUpRefrigerator id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
+        // case "eu0v2xgprrhhg41g":
+        //     return <PopUpBlind id={props.id} name={props.name} closeModal={props.closeModal}/>;
+        //
         default:
             return (
                 <ModalBody>
