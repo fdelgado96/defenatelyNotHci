@@ -1,53 +1,20 @@
 import React, {Component} from 'react';
 import api from '../api';
 import EditarFuncion from './EditarFuncion'
+import {Button} from 'reactstrap'
 
 class Funciones extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            routines : []
-        };
-    }
-
-    componentWillMount(){
-        api.routines.list()
-            .done((data) => {
-                if(this.props.room) {
-                    this.setState({
-                        routines: data.routines.filter(routine => routine.meta === this.props.room)
-                    });
-                }
-                else {
-                    this.setState({
-                        routines: data.routines
-                    });
-                }
-            })
-            .fail(() => {
-                console.log("List Routines Failed")}
-            );
-        api.deviceTypes.list()
-            .done((data) => {
-                let params = [];
-                data.devices.forEach( element =>
-                    element.actions.forEach( action =>
-                        action.params.forEach( param =>
-                            params.push(param)
-                        )
-                    )
-                );
-                console.log(params.filter( (v, i, a) => a.indexOf(v) === i));
-            });
     }
 
     render(){
-       const routineList = this.state.routines.map(
+        const routineList = this.props.routines.map(
            (routine) =>
-                <Funcion name={routine.name} id={routine.id}/>
-       );
+                <Funcion name={routine.name} id={routine.id} callback={this.props.callback}/>
+        );
 
-       return (<ul>{routineList}</ul>);
+        return (<ul>{routineList}</ul>);
     };
 }
 
@@ -55,6 +22,7 @@ class Funcion extends Component{
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
+        this.deleteFunction = this.deleteFunction.bind(this);
         this.state = {
             popup: false
         };
@@ -66,6 +34,12 @@ class Funcion extends Component{
         });
     }
 
+    deleteFunction() {
+        api.routines.delete(this.props.id)
+            .done(() => this.props.callback())
+            .fail(() => console.log("Delete function "+this.props.id+" failed"));
+    }
+
     render() {
         return (
             <div className="input-group">
@@ -73,7 +47,8 @@ class Funcion extends Component{
                 <button type="button" className="btn" onClick={this.toggle}>
                     <span className="glyphicon glyphicon-cog"/>
                 </button>
-                <EditarFuncion id={this.props.id} visible={this.state.popup} toggle={this.toggle}/>
+                <Button color="danger" onClick={this.deleteFunction}>-</Button>
+                <EditarFuncion id={this.props.id} visible={this.state.popup} toggle={this.toggle} />
             </div>
         );
     }
