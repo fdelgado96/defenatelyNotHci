@@ -11,6 +11,10 @@ export default class HelpBoard extends React.Component {
             missing:true,
             submited:false,
         };
+        this.validateEmail = this.validateEmail.bind(this);
+        this.validInput = this.validInput.bind(this);
+        this.missingRender = this.missingRender.bind(this);
+    
     }
 
     validateEmail(email) {
