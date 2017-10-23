@@ -3,7 +3,7 @@ import { Alert } from 'reactstrap';
 import { Button } from 'reactstrap';
 
 
-class HelpBoard extends React.Component {
+export default class HelpBoard extends React.Component {
 
     constructor(props) {
         super(props);
