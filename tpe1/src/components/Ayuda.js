@@ -19,8 +19,8 @@ export default class HelpBoard extends React.Component {
     }
 
     validInput(input1,input2,input3,input4) {
-       return inpu1 && input2 && input3 && input4;
-       }
+       return input1 && input2 && input3 && input4;
+      }
 
     handleClick() {
 
@@ -181,3 +181,5 @@ function CommentInput(props) {
     );
 
 }
+
+export default HelpBoard;
