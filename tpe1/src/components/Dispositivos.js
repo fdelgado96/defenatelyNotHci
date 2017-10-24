@@ -1,7 +1,7 @@
 import React from 'react';
 import api from '../api';
 import whiteCog from '../images/whiteCog.jpg';
-import {Modal, ModalBody, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
+import {Modal, ModalBody, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, InputGroup, InputGroupAddon, InputGroupButton, Button} from 'reactstrap';
 import * as $ from "jquery";
 import PopUpLamp from './PopUpLamp';
 import PopUpOven from './PopUpOven';
@@ -11,6 +11,7 @@ import PopUpRefrigerator from './PopUpRefrigerador';
 import PopUpBlind from './PopUpBlind';
 import PopUpTimer from './PopUpTimer';
 import PopUpAlarm from './PopUpAlarm';
+import '../css/Dispositivos.css'
 
 import '../css/Lists.css'
 import "../css/PopUp.css"
@@ -39,12 +40,10 @@ class Dispositivos extends React.Component{
    render(){
        const listDevices = this.state.devices.map((device) => {
            return (
-               <ListGroupItem className="list-background-color">
-                   <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id}/>
-               </ListGroupItem>
+               <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id}/>
            )
        });
-       return <ListGroup>{listDevices}</ListGroup>;
+       return <div>{listDevices}</div>;
 
    };
 }
@@ -67,23 +66,18 @@ class Dispositivo extends React.Component{
 
     render() {
         return(
-            <div>
-
-                <ListGroup className="input-group-lg">
-                    <ListGroupItemHeading>{this.props.name}</ListGroupItemHeading>
-                    <ListGroupItem className="no-padding">
-                        <button type="button" className="btn col-lg-12 btn-primary" onClick={this.handleClick}>
-                            <span className="text-center">Modificar </span>
-                            <img src={whiteCog} width="30" alt="cog"/>
-                        </button>
-                    </ListGroupItem>
-                </ListGroup>
-
+            <InputGroup className="dispositivo">
+                <InputGroupAddon className="dispositivo-text">{this.props.name}</InputGroupAddon>
                 <Modal  style={{width:'400px'}} isOpen={this.state.open} onExit={this.closeModal} aria-labelledby={this.props.id+"Modal"}>
                     <PopUpSelector  id ={this.props.id} typeId={this.props.typeId} name={this.props.name}  closeModal ={this.closeModal}/>
                 </Modal>
-
-            </div>
+                <InputGroupButton className="no-padding">
+                    <Button color="primary" onClick={this.handleClick}>
+                        <span className="text-center">Modificar </span>
+                        <i className="fa fa-cog"/>
+                    </Button>
+                </InputGroupButton>
+            </InputGroup>
         );
     };
 }
