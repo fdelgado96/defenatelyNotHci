@@ -36,9 +36,6 @@ class Dispositivos extends React.Component{
         this.componentWillMount();
     }
 
-    componentWillReceiveProps() {
-        this.componentWillMount();
-    }
 
    render(){
        const listDevices = this.state.devices.map((device) => {
@@ -68,6 +65,7 @@ class Dispositivo extends React.Component{
 
 
     render() {
+
         return(
             <InputGroup className="dispositivo justify-content-center">
                 <InputGroupAddon className="dispositivo-text">{this.props.name}</InputGroupAddon>

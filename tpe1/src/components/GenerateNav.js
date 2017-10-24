@@ -22,11 +22,7 @@ function GenerateNav(props) {
                 </NavItem>
                 {listNavItems}
                 <NavItem>
-                    <NavLink active={props.active === "administracion"} onClick={() => props.callback("administracion")}
-                             href="#">ADMINISTRACIÓN</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink active={this.props.active === "ayuda"} onClick={() => this.props.callback("ayuda")}
+                    <NavLink active={props.active === "ayuda"} onClick={() => props.callback("ayuda")}
                              href="#">AYUDA</NavLink>
                 </NavItem>
             </Nav>

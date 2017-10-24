@@ -36,6 +36,7 @@ class App extends Component {
     }
 
     render() {
+
         return (
             <div>
                 <Header rooms={this.state.rooms} active={this.state.activeView} callback={this.setView}/>

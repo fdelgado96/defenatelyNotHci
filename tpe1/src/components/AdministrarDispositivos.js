@@ -58,8 +58,10 @@ class AdministrarDispositivos extends Component {
     }
 
     refresh() {
+        console.log("startRefresh ")
         api.devices.list()
             .done((data) => {
+                console.log(data);
                 this.setState({
                     devices: data.devices
                 });

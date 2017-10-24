@@ -1,8 +1,9 @@
 import React from 'react';
-import bulb from '../images/bulb.png';
+import ambientes from '../images/ambientes.png';
 import gears from '../images/gears.png';
 import dispositivos from '../images/dispositivos.png';
 import '../css/Menu.css';
+import AdminAmbientes from "./AdminAmbientes";
 
 function MenuItem(props) {
     return (
@@ -17,8 +18,8 @@ function Menu(props) {
     return (
         <div className="container full-page">
             <div className="row menu-container align-items-center justify-content-md-center">
-                <MenuItem title="ADMINISTRAR AMBIENTES" img={bulb} onClick={()=> props.callback("ambientes")} />
-                <MenuItem title="ADMINISTRACIÓN DE DISPOSITIVOS" img={dispositivos} onClick={()=> props.callback("dispositivos")} />
+                <MenuItem title="ADMINISTRAR AMBIENTES" img={ambientes} onClick={()=> props.callback("ambientes")} />
+                <MenuItem title="ADMINISTRAR DISPOSITIVOS" img={dispositivos} onClick={()=> props.callback("dispositivos")} />
                 <MenuItem title="AUTOMATIZACIÓN" img={gears} onClick={()=> props.callback("automatizacion")} />
             </div>
         </div>
