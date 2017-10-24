@@ -21,7 +21,7 @@ export default class Header extends Component {
         return (
             <div>
                 <Navbar color="dark" dark expand="md">
-                    <NavbarBrand href="#"><img src={logo} className="logo" alt="logo"/><span className="brand">Smart<span className="brand-colored">HOME</span></span></NavbarBrand>
+                    <NavbarBrand onClick={()=>this.props.callback("general")} href="#"><img src={logo} className="logo" alt="logo"/><span className="brand">Smart<span className="brand-colored">HOME</span></span></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
