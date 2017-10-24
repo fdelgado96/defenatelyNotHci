@@ -10,6 +10,11 @@ class Funciones extends Component{
         super(props);
     }
 
+
+    componentWillUpdate() {
+        this.props.callback();
+    }
+
     render(){
         const routineList = this.props.routines.map(
            (routine) =>
