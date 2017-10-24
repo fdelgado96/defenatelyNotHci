@@ -40,7 +40,7 @@ class Ambiente extends React.Component {
                 <div className="container row mx-auto">
                     <div className="col-lg-6 mx-auto">
                         <h1>Dispositivos</h1>
-                        <Dispositivos id={this.props.id} />
+                        <Dispositivos id={this.props.id}/>
                     </div>
                     <div className="col-lg-6 mx-auto">
                         <h1>Funciones Personalizadas</h1>
