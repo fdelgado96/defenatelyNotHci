@@ -25,7 +25,7 @@ export default class Header extends Component {
                     <NavbarBrand onClick={()=>this.props.callback("general")} href="#"><img src={logo} className="logo" alt="logo"/><span className="brand">Smart<span className="brand-colored">HOME</span></span></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <GenerateNav active={this.props.active} callback={this.props.callback}/>
+                        <GenerateNav rooms={this.props.rooms} active={this.props.active} callback={this.props.callback}/>
                     </Collapse>
                 </Navbar>
             </div>

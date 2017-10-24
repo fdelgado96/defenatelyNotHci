@@ -7,7 +7,7 @@ import Administracion from './Administracion'
 export default function (props) {
     switch (props.view) {
         case "general":
-            return <General />;
+            return <General rooms={props.rooms} callback={props.callback}/>;
         case "cocina":
             return <Ambiente id="b398aa66327c56bd"/>;
         case "living":

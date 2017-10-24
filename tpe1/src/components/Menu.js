@@ -17,7 +17,7 @@ function Menu(props) {
     return (
         <div className="container full-page">
             <div className="row menu-container align-items-center justify-content-md-center">
-                <MenuItem title="ILUMINACIÓN" img={bulb} onClick={()=> props.callback("iluminacion")} />
+                <MenuItem title="ADMINISTRAR AMBIENTES" img={bulb} onClick={()=> props.callback("ambientes")} />
                 <MenuItem title="ADMINISTRACIÓN DE DISPOSITIVOS" img={dispositivos} onClick={()=> props.callback("dispositivos")} />
                 <MenuItem title="AUTOMATIZACIÓN" img={gears} onClick={()=> props.callback("automatizacion")} />
             </div>
