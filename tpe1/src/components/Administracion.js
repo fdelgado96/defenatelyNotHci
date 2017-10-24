@@ -111,7 +111,7 @@ class Dispositivos extends React.Component{
             )
     }
 
-    componentWillUpdate() {
+    componentWillReceiveProps() {
         this.componentWillMount();
     }
 
