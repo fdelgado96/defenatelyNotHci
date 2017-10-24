@@ -1,9 +1,10 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import { Button } from 'reactstrap';
+import "../css/ayuda.css"
+var ReactDOM = require('react-dom');
 
-
-export default class HelpBoard extends React.Component {
+class HelpBoard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,27 +15,35 @@ export default class HelpBoard extends React.Component {
         this.validateEmail = this.validateEmail.bind(this);
         this.validInput = this.validInput.bind(this);
         this.missingRender = this.missingRender.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClick2 = this.handleClick2.bind(this);
     
     }
 
     validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+        var result = re.test(email);
+        
+        return result;
     }
 
     validInput(input1,input2,input3,input4) {
-       return input1 && input2 && input3 && input4;
-      }
+       var bol = (input1 && input2 && input3 && input4);
+        return bol;
+       
+    }
 
     handleClick() {
 
-        var name = document.getElementById("name").textContent;
-        var apellido = document.getElementById("apellido").textContent;
-        var email = document.getElementById("email").textContent;
-        var comment = document.getElementById("comment").textContent;
-        var asunto = document.getElementById("asunto").textContent;
-
-        if(validInput(name,apellido,comment,asunto) && validateEmail(email)) {
+        //N
+        var name = this.refs.name.value;
+        var apellido = this.refs.apellido.value;
+        var email = this.refs.email.value;
+        var asunto = this.refs.asunto.value;
+        var comment = this.refs.comment.value;
+        console.log((name === null) ?  "null" : "no es null wep wpe wpe");
+       
+        if(this.validInput(name,apellido,comment,asunto) && this.validateEmail(email)) {
             this.setState(
                 {
                     missing: false,
@@ -52,13 +61,6 @@ export default class HelpBoard extends React.Component {
 
     handleClick2() {
 
-        //reset text content in input 
-        var name = document.getElementById("name").textContent = "";
-        var apellido = document.getElementById("apellido").textContent = "";
-        var email = document.getElementById("email").textContent = "";
-        var comment = document.getElementById("comment").textContent = "";
-        var asunto = document.getElementById("asunto").textContent = "";
-
         this.setState(
             {
                 missing: true,
@@ -69,19 +71,45 @@ export default class HelpBoard extends React.Component {
     }
     missingRender() {
 
-        var alert = this.state.submited ? <AlertInput /> : <p>""</p>;
+        var alert = this.state.submited ? <AlertInput /> : <p></p>;
 
         return (
-            <div id="help-container">
-                <h2>Centro de Ayuda</h2>
-                <div >
-                    {alert}
-                    <TextInput />
-                    <EmailInput />
-                    <CommentInput />
+            <form id="form-ayuda">
+                <div id="help-container">
+                    <h2>Centro de Ayuda</h2>
+                    <div>
+                        {alert}
+                
+                        <div className="col-text-input">
+                            <div className="form-group">
+                                <label >Nombre:</label>
+                                <input type="text" className="form-control" ref="name"/>
+                            </div>
+                            <div className="form-group">
+                                <label >Apellido</label>
+                                <input type="text" className="form-control" ref="apellido" />
+                            </div>
+                        </div>
+                       
+                        <div className="col-text-input">
+                            <div className="form-group">
+                                <label>Email</label>
+                                <input type="email" className="form-control" ref="email" placeholder="name@example.com"/>
+                            </div>
+                            <div className="form-group">
+                                <label>Asunto</label>
+                                <input type="text" className="form-control" ref="asunto" placeholder="Ejemplo: Falla en Automatizacion"/>
+                            </div>
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Comentario</label>
+                            <textarea className="form-control" rows="10" ref="comment" placeholder="Escriba aqui su mensaje..."></textarea>
+                        </div>
+                    </div>
+                    <Button color="primary" onClick={() => this.handleClick()} >Enviar</Button>
                 </div>
-                <ButtonSend onClick={() => this.handleClick()} />
-            </div>
+            </form>
 
         );
     }
@@ -89,38 +117,33 @@ export default class HelpBoard extends React.Component {
     render() {
 
         if(this.state.missing) 
-            return missingRender;
+            return this.missingRender();
         else {   
             return (
-                <div id="message-sent">
-                    <HelpSent email={this.state.email}/>
-                    <ButtonAccept onClick={() => this.handleClick2()} />
+                <div id="alert-container">
+                    <HelpSent />
+                    <div id="morel">
+                        <Button id="suc-but" color="success" onClick={() => this.handleClick2()} >Aceptar</Button>
+                    </div>
                 </div>
             );
         }
     }
 }
 
-function ButtonAccept(props) {
-    
-    return (
-        <Button color="success" onClick={() => this.props.onClick()} >Aceptar</Button>
-    );
-}
 
 function HelpSent(props) {
     
     return (
-        <div>
+        <div >
             <Alert color="success">
                 <h4 className="alert-heading">Su consulta ha sido enviada con exito!</h4>
                 <p>
-                Nos comunicaremos con usted a la brevedad para solucionar su problema. Se le enviara un mail a la casilla ingresada: 
-                {this.props.email}.
+                Nos comunicaremos con usted a la brevedad para solucionar su problema. Se le enviara un mail a la casilla ingresada.
                 </p>
                 <hr />
                 <p className="mb-0">
-                Se puede ingresar algo aca tambien.
+                Gracias por confiar en nosotros!
                 </p>
             </Alert>
         </div>
@@ -128,22 +151,15 @@ function HelpSent(props) {
 
 }
 
-function ButtonSend(props) {
-
-    return (
-        <Button color="primary" onClick={() => this.props.onClick()} >Enviar</Button>
-    );
-}
-
 function TextInput(props) { //inputs de nombre y apellido
     return (
             <div className="col-text-input">
                 <div className="form-group">
-                    <label for="name">Nombre:</label>
+                    <label >Nombre:</label>
                     <input type="text" className="form-control" id="name"/>
                 </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
+                <div className="form-group">
+                    <label >Apellido</label>
                     <input type="text" className="form-control" id="apellido" />
                 </div>
             </div>
@@ -155,11 +171,11 @@ function EmailInput(props) { //inputs de email y asunto
     return (
         <div className="col-text-input">
             <div className="form-group">
-                <label for="email">Email</label>
+                <label>Email</label>
                 <input type="email" className="form-control" id="email" placeholder="name@example.com"/>
             </div>
-            <div class="form-group">
-                <label for="asunto">Asunto</label>
+            <div className="form-group">
+                <label>Asunto</label>
                 <input type="text" className="form-control" id="asunto" placeholder="Ejemplo: Falla en Automatizacion"/>
             </div>
         </div>
@@ -178,9 +194,9 @@ function AlertInput(props) {
 function CommentInput(props) {
 
     return (
-        <div class="form-group">
-            <label for="comment">Comentario</label>
-            <textarea class="form-control" rows="10" id="comment" placeholder="Escriba aqui su mensaje..."></textarea>
+        <div className="form-group">
+            <label >Comentario</label>
+            <textarea className="form-control" rows="10" id="comment" placeholder="Escriba aqui su mensaje..."></textarea>
         </div>
     );
 
