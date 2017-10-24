@@ -52,7 +52,7 @@ class Dispositivo extends React.Component{
     attemptDelete() {
         this.setState({
             alertType: "warning",
-            alertMessage: "¿Esta seguro de que desea eliminar la función?",
+            alertMessage: "¿Esta seguro de que desea el dispositivo?",
             alertConfirm: true,
             showAlert: true
         })
@@ -108,14 +108,14 @@ class Dispositivo extends React.Component{
         if(bool) {
             this.setState({
                 alertType: "success",
-                alertMessage: "La función se actualizó correctamente",
+                alertMessage: "El dispositivo se actualizó correctamente",
                 showAlert: true
             })
         }
         else {
             this.setState({
                 alertType: "error",
-                alertMessage: "Hubo un error al intentar actualizar la función",
+                alertMessage: "Hubo un error al intentar actualizar el dispositivo",
                 showAlert: true
             })
         }
