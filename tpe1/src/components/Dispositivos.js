@@ -36,6 +36,10 @@ class Dispositivos extends React.Component{
         this.componentWillMount();
     }
 
+    componentWillReceiveProps() {
+        this.componentWillMount();
+    }
+
    render(){
        const listDevices = this.state.devices.map((device) => {
            return (
