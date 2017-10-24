@@ -1,7 +1,7 @@
 import React from 'react';
 import api from '../api'
 import arrow from '../images/arrow.png';
-import {Modal, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, InputGroup, InputGroupAddon, InputGroupButton, Button} from 'reactstrap';
+import {Modal, ModalHeader, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, InputGroup, InputGroupAddon, InputGroupButton, Button, Label, Input, Form, FormGroup, ModalBody, ModalFooter} from 'reactstrap';
 import Simplert from 'react-simplert'
 
 class Administracion extends React.Component {
@@ -9,22 +9,17 @@ class Administracion extends React.Component {
         super(props);
         this.refresh = this.refresh.bind(this);
         this.handleChangeRoom = this.handleChangeRoom.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
         this.state = {
             id: "0086b49564394504",
             name: "living",
             rooms: [],
-            visible: false
+            visible: true
         };
     }
 
     handleChangeRoom(roomId, roomName) {
-        this.state.id = roomId
-        this.state.name = roomName
-        this.setState(this.state);
+        this.setState({id: roomId, name: roomName});
     }
-
-    handleAdd() {}
 
     componentWillMount(){
         this.refresh();
@@ -33,8 +28,7 @@ class Administracion extends React.Component {
     refresh() {
         api.room.list()
             .done((data) => {
-                this.state.rooms = data.rooms
-                this.setState(this.state);
+                this.setState({rooms: data.rooms});
             })
             .fail(() => {
                 console.log("List areas Failed")}
@@ -47,7 +41,7 @@ class Administracion extends React.Component {
         );
         return (
             <div>
-                <Agregar visible={this.state.visible} />
+                <Agregar visible={this.state.visible} id={this.state.roomId} rooms={this.state.rooms} toggle={() => {this.setState({visible: !this.state.visible})}}/>
                 <h1></h1>
                 <div className="container row mx-auto">
                     <div className="col-lg-6 mx-auto">
@@ -57,7 +51,7 @@ class Administracion extends React.Component {
                     <div className="col-lg-6 mx-auto">
                         <h1>Dispositivos en {this.state.name}</h1>
                         <Dispositivos id={this.state.id} />
-                        <button type="button" className="btn col-lg-12 btn-success" onClick={this.handleAdd}>
+                        <button type="button" className="btn col-lg-12 btn-success" onClick={() => {this.setState({visible: !this.state.visible})}}>
                             <span className="text-center">Agregar </span>
                             <i className="fa fa-plus"/>
                         </button>
@@ -71,16 +65,76 @@ class Administracion extends React.Component {
 class Agregar extends React.Component {
     constructor(props) {
         super(props);
+        this.changeRoom = this.changeRoom.bind(this)
+        this.changeType = this.changeType.bind(this)
+        this.apply = this.apply.bind(this)
+        this.state = { id: props.id, type: "go46xmbqeomjrsjr", name: "" }
+    }
+
+    changeRoom(event) {
+        this.state.id = event.target.value;
+        this.setState(this.state);
+    }
+
+    changeType(event) {
+        this.state.type = event.target.value;
+        this.setState(this.state);
+    }
+
+    apply() {
+        if(this.state.name === "") {
+            this.setState({
+                alertType: "warning",
+                alertMessage: "Debe especificar un nombre",
+                showAlert: true
+            });
+            return;
+        }
+
+        api.devices.add("{\"typeId\": \"" + this.state.type + "\",\"name\": " + this.state.name + ",\"meta\": {}}")
+            .done(() => this.props.toggle())
+            .fail(() => console.log("List areas Failed"));
+
+        this.props.toggle();
     }
 
     render() {
-        if (this.props.visible) {
-            return <h1>TEST</h1>;
-        }
-        return <div/>
+        const roomOptions = this.props.rooms.map(room => <option value={room.id}>{room.name}</option>);
+        const types = [<option value="eu0v2xgprrhhg41g">cortina</option>, <option value="go46xmbqeomjrsjr">luz</option>, <option value="im77xxyulpegfmv8">horno</option>,
+            <option value="li6cbv5sdlatti0j">aire</option>, <option value="lsf78ly0eqrjbz91">puerta</option>, <option value="mxztsyjzsrq7iaqc">alarma</option>,
+            <option value="ofglvd9gqX8yfl3l">timer</option>, <option value="rnizejqr2di0okho">heladera</option>]
+        return <Modal isOpen={this.props.visible} toggle={this.props.toggle}>
+                    <ModalHeader toggle={this.props.toggle}>Agregar Dispositivo</ModalHeader>
+                    <Form>
+                        <ModalBody>
+                            <FormGroup>
+                                <Label>Nombre</Label>
+                                <input type="text" className="form-control" ref="name" onChange={(event) => this.setState({name: event.target.value})}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Tipo</Label>
+                                <Input type="select" name="rooms" value={this.state.type} onChange={this.changeType}>
+                                    {types}
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Area</Label>
+                                <Input type="select" name="rooms" value={this.state.id} onChange={this.changeRoom}>
+                                    <option value="">Todas</option>
+                                    {roomOptions}
+                                </Input>
+                            </FormGroup>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="primary" onClick={this.apply}>Crear</Button>{' '}
+                            <Button color="secondary" onClick={this.props.toggle}>Cancelar</Button>
+                        </ModalFooter>
+                    </Form>
+                    <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                              onClose={() => this.setState({showAlert: false})} disableOverlayClick={true}/>
+                </Modal>
     }
 }
-
 
 class Area extends React.Component {
     constructor(props){
