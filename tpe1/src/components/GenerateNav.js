@@ -34,6 +34,10 @@ class GenerateNav extends React.Component{
                 </NavItem>
                 {listNavItems}
                 <NavItem>
+                    <NavLink active={this.props.active === "administracion"} onClick={() => this.props.callback("administracion")}
+                             href="#">ADMINISTRACIÓN</NavLink>
+                </NavItem>
+                <NavItem>
                     <NavLink active={this.props.active === "ayuda"} onClick={() => this.props.callback("ayuda")}
                              href="#">AYUDA</NavLink>
                 </NavItem>

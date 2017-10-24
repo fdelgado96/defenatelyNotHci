@@ -23,6 +23,6 @@ export default function (props) {
         case "ayuda":
             return <HelpBoard />;
         default:
-            return <h1>Me dio paja hacer todos</h1>;
+            return <Ambiente id={props.view}/>;
     }
 }
