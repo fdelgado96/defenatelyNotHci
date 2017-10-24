@@ -17,7 +17,7 @@ class Ambiente extends React.Component {
         this.refresh();
     }
 
-    componentWillUpdate(){
+    componentWillReceiveProps(){
         this.refresh();
     }
 
