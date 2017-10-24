@@ -182,8 +182,8 @@ class Dispositivos extends React.Component{
 
 class Dispositivo extends React.Component{
     constructor(props){
-        super(props)
-        this.state = {open: false}
+        super(props);
+        this.state = {open: false};
         this.handleClick = this.handleClick.bind(this);
         this.closeModal =this.closeModal.bind(this);
         this.attemptDelete = this.attemptDelete.bind(this);
@@ -209,7 +209,34 @@ class Dispositivo extends React.Component{
 
     deleteDevice() {
         this.resetConfirm();
-        api.devices.delete(this.props.id)
+
+        api.routines.list()
+            .done((data) => {
+                let devices = [];
+                data.routines.forEach(routine =>
+                    routine.actions.forEach(action =>
+                        devices.push(action.deviceId)
+                    )
+                );
+
+                if(devices.includes(this.props.id)) {
+                    this.setState({
+                        alertType: "error",
+                        alertMessage: "No se puede eliminar el dispositivo porque esta asociado a una o más funciones",
+                        showAlert: true
+                    });
+                }
+                else {
+                    api.devices.delete(this.props.id)
+                        .fail(() =>
+                            this.setState({
+                                alertType: "error",
+                                alertMessage: "Hubo un error al intentar eliminar el dispositivo",
+                                showAlert: true
+                            })
+                        );
+                }
+            })
             .fail(()=>
                 this.setState({
                     alertType: "error",
