@@ -80,7 +80,7 @@ export default class Automatizacion extends Component{
             <Button color="primary" className="crear-funcion" onClick={this.toggle}>Crear Función</Button>
             <EditarFuncion visible={this.state.popup} toggle={this.toggle} callback={this.didCreate}/>
             <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
-                onClose={this.closeAlert}/>
+                onClose={this.closeAlert} disableOverlayClick={true}/>
         </div>
         );
     }

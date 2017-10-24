@@ -226,7 +226,7 @@ export default class EditarFuncion extends Component {
                     </ModalFooter>
                 </Form>
                 <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
-                          onClose={this.closeAlert}/>
+                          onClose={this.closeAlert} disableOverlayClick={true}/>
             </Modal>
         );
     }
@@ -371,7 +371,8 @@ class ActionAdd extends Component {
                     <DeviceSelect devices={this.props.devices} handler={this.changeDevice} />
                     <ActionSelect actions={this.state.actions} value={this.state.action.name} handler={this.changeAction}/>
                     <ParamInput params={this.state.action.params} value={this.state.param} handler={this.changeParam} id={this.props.id}/>
-                    <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"} onClose={this.closeAlert}/>
+                    <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                              onClose={this.closeAlert} disableOverlayClick={true}/>
                     <InputGroupButton><Button color="primary" className="actionadd-button" onClick={this.submit}>+</Button></InputGroupButton>
                 </InputGroup>
         );
