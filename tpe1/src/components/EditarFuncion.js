@@ -14,6 +14,7 @@ export default class EditarFuncion extends Component {
         this.changeName = this.changeName.bind(this);
         this.changeRoom = this.changeRoom.bind(this);
         this.addAction = this.addAction.bind(this);
+        this.deleteAction = this.deleteAction.bind(this);
         this.closeAlert = this.closeAlert.bind(this);
         this.state = {
             name: "",
@@ -192,6 +193,12 @@ export default class EditarFuncion extends Component {
         });
     }
 
+    deleteAction(actionName) {
+        this.setState({
+            actions: this.state.actions.filter((elem) => elem.actionName != actionName)
+        });
+    }
+
     closeAlert() {
         this.setState({
             showAlert: false
@@ -215,7 +222,7 @@ export default class EditarFuncion extends Component {
                         <FormGroup>
                             <Label>Acciones</Label>
                             <Table>
-                                <ActionList actions={this.state.actions} devices={this.state.devices}/>
+                                <ActionList actions={this.state.actions} devices={this.state.devices} callback={this.deleteAction}/>
                             </Table>
                             <ActionAdd devices={this.state.devices} callback={this.addAction} id={this.props.id}/>
                         </FormGroup>
@@ -236,14 +243,17 @@ function ActionList(props) {
     const actionList = props.actions.map(
         action =>
             <tr>
-                <td>
+                <td className="action-text">
                     {props.devices.find(element => element.id === action.deviceId).name}
                 </td>
-                <td>
+                <td className="action-text">
                     {action.actionName}
                 </td>
-                <td>
+                <td className="action-text">
                     {action.params.length > 0 ? action.params[0] : ""}
+                </td>
+                <td className="action-delete">
+                    <Button color="danger" onClick={() => props.callback(action.actionName)}><i className="fa fa-trash"/></Button>
                 </td>
             </tr>
     );

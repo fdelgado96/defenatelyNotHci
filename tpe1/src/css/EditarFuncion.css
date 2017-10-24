@@ -15,6 +15,14 @@
     width: auto;
 }
 
+.action-text {
+    vertical-align: middle !important;
+}
+
+.action-delete {
+    width: 40px;
+}
+
 .color-displayer {
     width: 20%;
 }
