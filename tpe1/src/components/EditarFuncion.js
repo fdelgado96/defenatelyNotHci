@@ -4,6 +4,7 @@ import '../css/EditarFuncion.css';
 import '../css/Slider.css'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, Form, FormGroup, Label, Input, InputGroup, InputGroupButton, InputGroupAddon, Table, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
 import { CirclePicker } from 'react-color';
+import Simplert from 'react-simplert'
 
 export default class EditarFuncion extends Component {
     constructor(props) {
@@ -13,12 +14,15 @@ export default class EditarFuncion extends Component {
         this.changeName = this.changeName.bind(this);
         this.changeRoom = this.changeRoom.bind(this);
         this.addAction = this.addAction.bind(this);
+        this.closeAlert = this.closeAlert.bind(this);
         this.state = {
             name: "",
             actions: [],
             room: "{}",
             devices: [],
-            rooms: []
+            rooms: [],
+            showAlert: false,
+            alertMessage: ""
         };
     }
 
@@ -33,8 +37,11 @@ export default class EditarFuncion extends Component {
                     });
                 })
                 .fail(() => {
-                    console.log("Get Routine "+this.props.id+" Failed")}
-                );
+                    this.setState({
+                        alertMessage: "Hubo un error al intentar cargar la función",
+                        showAlert: true
+                    })
+                });
         }
         else {
             this.setState({
@@ -52,8 +59,11 @@ export default class EditarFuncion extends Component {
                     });
                 })
                 .fail(() => {
-                    console.log("List Devices Failed")}
-                );
+                    this.setState({
+                        alertMessage: "Hubo un error al intentar cargar la lista de dispositivos",
+                        showAlert: true
+                    })
+                });
         }
         else {
             api.room.getDevices(this.state.room)
@@ -63,8 +73,11 @@ export default class EditarFuncion extends Component {
                     });
                 })
                 .fail(() => {
-                    console.log("Get Room Devices Failed")}
-                );
+                    this.setState({
+                        alertMessage: "Hubo un error al intentar cargar la lista de dispositivos",
+                        showAlert: true
+                    })
+                });
         }
 
         api.room.list()
@@ -74,8 +87,11 @@ export default class EditarFuncion extends Component {
                 });
             })
             .fail(() => {
-                console.log("List Rooms Failed")}
-            );
+                this.setState({
+                    alertMessage: "Hubo un error al intentar cargar la lista de ambientes",
+                    showAlert: true
+                })
+            });
     }
 
     apply() {
@@ -95,7 +111,10 @@ export default class EditarFuncion extends Component {
                 .fail(()=> {
                     if(this.props.callback)
                         this.props.callback(false);
-                });
+                })
+                .always(()=>
+                    this.componentWillMount()
+                );
         else
             api.routines.add(routine)
                 .done(()=> {
@@ -105,10 +124,12 @@ export default class EditarFuncion extends Component {
                 .fail(()=> {
                     if(this.props.callback)
                         this.props.callback(false);
-                });
+                })
+                .always(()=>
+                    this.componentWillMount()
+                );
 
         this.props.toggle();
-        this.componentWillMount();
     }
 
     cancel() {
@@ -132,8 +153,11 @@ export default class EditarFuncion extends Component {
                 });
             })
             .fail(() => {
-                console.log("Get Room Devices Failed")}
-            );
+                this.setState({
+                    alertMessage: "Hubo un error al intentar cargar la lista de dispositivos",
+                    showAlert: true
+                })
+            });
     }
 
     addAction(action) {
@@ -141,6 +165,12 @@ export default class EditarFuncion extends Component {
         actions.push(action);
         this.setState({
             actions: actions
+        });
+    }
+
+    closeAlert() {
+        this.setState({
+            showAlert: false
         });
     }
 
@@ -171,6 +201,8 @@ export default class EditarFuncion extends Component {
                         <Button color="secondary" onClick={this.cancel}>Cancelar</Button>
                     </ModalFooter>
                 </Form>
+                <Simplert showSimplert={this.state.showAlert} type={"error"} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                          onClose={this.closeAlert}/>
             </Modal>
         );
     }
@@ -218,13 +250,18 @@ class ActionAdd extends Component {
         this.changeAction = this.changeAction.bind(this);
         this.changeParam = this.changeParam.bind(this);
         this.submit = this.submit.bind(this);
+        this.closeAlert = this.closeAlert.bind(this);
         this.state = {
             device: {},
             action: {
+                name: "",
                 params:[]
             },
             param: "",
-            actions: []
+            actions: [],
+            showAlert: false,
+            alertMessage: "",
+            alertType: ""
         }
     }
 
@@ -241,9 +278,13 @@ class ActionAdd extends Component {
                     }
                 })
             )
-            .fail(() =>
-                console.log("Get device type "+device.typeId+" failed")
-            )
+            .fail(() => {
+                this.setState({
+                    alertType: "error",
+                    alertMessage: "Hubo un error al intentar cargar la lista de acciones",
+                    showAlert: true
+                })
+            });
     }
 
     changeAction(event) {
@@ -261,6 +302,31 @@ class ActionAdd extends Component {
     }
 
     submit() {
+        if(!this.state.device.id) {
+            this.setState({
+                alertType: "warning",
+                alertMessage: "Debe seleccionar un dispositivo",
+                showAlert: true
+            });
+            return;
+        }
+        if(this.state.action.name === "") {
+            this.setState({
+                alertType: "warning",
+                alertMessage: "Debe seleccionar una acción",
+                showAlert: true
+            });
+            return;
+        }
+        if(this.state.action.params.length > 0 && this.state.param === "") {
+            this.setState({
+                alertType: "warning",
+                alertMessage: "Debe especificar un valor para esta acción",
+                showAlert: true
+            });
+            return;
+        }
+
         this.props.callback({
             deviceId: this.state.device.id,
             actionName: this.state.action.name,
@@ -269,12 +335,19 @@ class ActionAdd extends Component {
         });
     }
 
+    closeAlert() {
+        this.setState({
+            showAlert: false
+        });
+    }
+
     render() {
         return (
                 <InputGroup>
-                    <DeviceSelect devices={this.props.devices} handler={this.changeDevice}/>
+                    <DeviceSelect devices={this.props.devices} handler={this.changeDevice} />
                     <ActionSelect actions={this.state.actions} value={this.state.action.name} handler={this.changeAction}/>
                     <ParamInput params={this.state.action.params} value={this.state.param} handler={this.changeParam} id={this.props.id}/>
+                    <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"} onClose={this.closeAlert}/>
                     <InputGroupButton><Button color="primary" className="actionadd-button" onClick={this.submit}>+</Button></InputGroupButton>
                 </InputGroup>
         );
@@ -346,6 +419,9 @@ class ParamInput extends Component {
                     );
                 case "brightness":
                 case "temperature":
+                    if(this.props.value === "") {
+                        this.props.handler((this.props.params[0].maxValue+this.props.params[0].minValue)/2)
+                    }
                     return (<Input type="range" value={this.props.value} min={this.props.params[0].minValue}
                                    max={this.props.params[0].maxValue} onChange={(e) => this.props.handler(parseInt(e.target.value))}/>);
                 case "heat":
