@@ -60,12 +60,38 @@ class Dispositivo extends React.Component{
 
     deleteFunction() {
         this.resetConfirm();
-        api.devices.delete(this.props.id)
-            .done(() => this.props.callback())
+        api.routines.list()
+            .done((data) => {
+                let devices = [];
+                data.routines.forEach(routine =>
+                    routine.actions.forEach(action =>
+                        devices.push(action.deviceId)
+                    )
+                );
+
+                if(devices.includes(this.props.id)) {
+                    this.setState({
+                        alertType: "error",
+                        alertMessage: "No se puede eliminar el dispositivo porque esta asociado a una o más funciones",
+                        showAlert: true
+                    });
+                }
+                else {
+                    api.devices.delete(this.props.id)
+                        .done(() => this.props.callback())
+                        .fail(() =>
+                            this.setState({
+                                alertType: "error",
+                                alertMessage: "Hubo un error al intentar eliminar el dispositivo",
+                                showAlert: true
+                            })
+                        );
+                }
+            })
             .fail(()=>
                 this.setState({
                     alertType: "error",
-                    alertMessage: "Hubo un error al intentar eliminar la función",
+                    alertMessage: "Hubo un error al intentar eliminar el dispositivo",
                     showAlert: true
                 })
             );
