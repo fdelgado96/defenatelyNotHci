@@ -4,6 +4,7 @@ import {Button, Modal, ButtonGroup, Form, Input, InputGroup, ModalBody, ModalFoo
 
 import "../css/activationSlider.css"
 import "../css/Slider.css"
+import Simplert from "react-simplert";
 
 
 class PopUpAlarm extends React.Component{
@@ -14,11 +15,15 @@ class PopUpAlarm extends React.Component{
             status: "",
             localCode: 0,
             modalOpen: false,
+            showAlert: false,
+            alertMessage: "",
+            alertType: ""
         };
         this.setLocalCode = this.setLocalCode.bind(this);
         this.changeState = this.changeState.bind(this);
         this.closeNewCodeModal = this.closeNewCodeModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.closeAlert = this.closeAlert.bind(this);
     }
 
     setLocalCode(event){
@@ -37,16 +42,26 @@ class PopUpAlarm extends React.Component{
         console.log(this.state.status)
         event.preventDefault();
         api.devices.putDevice(this.state.id,[this.state.status], [this.state.localCode])
-            // .done((data)=>{
-            // if(data.result){
-            //     this.props.closeModal();
-            // }
-            // else{
-            //     //popup error, contraseña incorrecta
-            // }
-            // })
+            .done((data)=>{
+            if(JSON.parse(data).result){
+                this.props.closeModal();
+            }
+            else{
+                this.setState({
+                    showAlert: true,
+                    alertMessage: "Codigo de seguridad incorrecto",
+                    alertType: "error"
+                })
+            }
+            })
     }
 
+    closeAlert() {
+        this.setState({
+            showAlert: false
+
+        });
+    }
 
     render(){
         return(
@@ -76,8 +91,9 @@ class PopUpAlarm extends React.Component{
                 <ModalFooter>
                     <button className="btn btn-primary" onClick={this.props.closeModal}>Cerrar</button>
                     <input type="submit" className="btn btn-primary" value="Guardar"/>
-
                 </ModalFooter>
+                <Simplert minWidth={200} showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                          onClose={this.closeAlert} disableOverlayClick={true}/>
             </Form>
         );
     }

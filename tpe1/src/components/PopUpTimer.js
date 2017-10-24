@@ -4,6 +4,7 @@ import {Button, Input, ButtonGroup, ModalBody, ModalFooter, ModalHeader, Progres
 
 import "../css/activationSlider.css"
 import "../css/Slider.css"
+import Simplert from "react-simplert";
 
 var ProgressBar = require('react-progressbar.js')
 var Circle = ProgressBar.Circle;
@@ -21,11 +22,15 @@ class PopUpTimer extends React.Component{
             remaining: 0,
             id: props.id,
             newInterval: 0,
+            showAlert: false,
+            alertMessage: "",
+            alertType: ""
         }
         this.changeState = this.changeState.bind(this);
         this.tick = this.tick.bind(this);
         this.setInterval = this.setInterval.bind(this);
         this.backupInterval = this.backupInterval.bind(this);
+        this.closeAlert = this.closeAlert.bind(this);
     }
 
     componentWillMount(){
@@ -71,15 +76,17 @@ class PopUpTimer extends React.Component{
 
     setInterval(){
         api.devices.putDevice(this.state.id,"setInterval", [this.state.newInterval])
-            //  .done((data)=>{
-            //      console.log(data);
-            //      console.log(data.result);
-            //      data.result ? this.setState({interval: this.state.newInterval}) : console.log("false");     <=== Una dura pelea con la api pero los booleans los retorna como undefined.
-            // if(data.result === true)
-            //     console.log("entro al if")
-            //     this.setState({interval: this.state.newInterval})
-           // });mensaje de error si da false, no se puede cmabiar mientras esta corriendo})
-        this.setState({interval: this.state.newInterval})
+             .done((data)=>{
+                if(JSON.parse(data).result)
+                     this.setState({interval: this.state.newInterval});
+                else{
+                    this.setState({
+                        showAlert: true,
+                        alertType: "error",
+                        alertMessage: "El timer debe estar detenido para establecer un nuevo intervalo",
+                    })
+                }
+           });
 
     }
 
@@ -88,6 +95,13 @@ class PopUpTimer extends React.Component{
             this.setState({remaining: this.state.remaining -1})
         }
     };
+
+    closeAlert() {
+        this.setState({
+            showAlert: false
+
+        });
+    }
 
     render(){
         console.log(this.state.newInterval);
@@ -136,6 +150,8 @@ class PopUpTimer extends React.Component{
                 <ModalFooter>
                     <button className="btn btn-primary" onClick={this.props.closeModal}>Cerrar</button>
                 </ModalFooter>
+                <Simplert minWidth={200} showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                          onClose={this.closeAlert} disableOverlayClick={true}/>
             </div>
         )
     }

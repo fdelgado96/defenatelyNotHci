@@ -86,7 +86,6 @@ class PopUpLamp extends React.Component{
 
 
     render(){
-        console.log(this.state.status)
         return(
             <Form onSubmit={this.handleSubmit}>
                 <ModalHeader>{this.props.name}</ModalHeader>

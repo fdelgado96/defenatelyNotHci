@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Menu from './Menu';
 import Automatizacion from './Automatizacion';
+import AdministrarDispositivos from "./AdministrarDispositivos";
 
 export default class General extends Component {
     constructor(props) {
@@ -27,8 +28,8 @@ export default class General extends Component {
                 return <Menu callback={this.setView}/>;
             case "iluminacion":
                 return <h1>Iluminación</h1>;
-            case "temperatura":
-                return <h1>Temperatura</h1>;
+            case "dispositivos":
+                return <AdministrarDispositivos/>;
             case "automatizacion":
                 return <Automatizacion />;
             default:

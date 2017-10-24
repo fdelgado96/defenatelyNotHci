@@ -137,10 +137,31 @@ api.routines = class{
     }
 };
 
+
+
 api.devices = class{
     static get url(){
         return api.baseUrl + "devices/"
     }
+
+    static setDevice(roomId, deviceId){
+        return $.ajax({
+            url: api.devices.url+deviceId+"/rooms/"+roomId,
+            method: "POST",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
+    static removeDevice(deviceId){
+        return $.ajax({
+            url: api.devices.url +"/"+deviceId+"/rooms",
+            method: "DELETE",
+            dataType: "json",
+            timeout: api.timeout
+        });
+    }
+
     static putDevice(deviceId, actionName, params){
         let stringParams = JSON.stringify(params);
         return $.ajax({

@@ -110,7 +110,7 @@ export default class EditarFuncion extends Component {
             return;
         }
 
-        if(this.state.actions.length == 0) {
+        if(this.state.actions.length === 0) {
             this.setState({
                 alertType: "warning",
                 alertMessage: "Debe especificar al menos una acción",
@@ -195,7 +195,7 @@ export default class EditarFuncion extends Component {
 
     deleteAction(actionName) {
         this.setState({
-            actions: this.state.actions.filter((elem) => elem.actionName != actionName)
+            actions: this.state.actions.filter((elem) => elem.actionName !== actionName)
         });
     }
 
