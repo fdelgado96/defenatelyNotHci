@@ -1,0 +1,16 @@
+
+.funcion-text {
+    width: 300px;
+}
+
+.funcion {
+    padding: 5px;
+}
+
+.funciones {
+    /*text-align: center;*/
+}
+
+.funciones > div {
+    width: auto;
+}

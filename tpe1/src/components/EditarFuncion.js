@@ -90,16 +90,22 @@ export default class EditarFuncion extends Component {
             api.routines.modify(routine)
                 .done(()=> {
                     if(this.props.callback)
-                        this.props.callback();
+                        this.props.callback(true);
                 })
-                .fail("Failed to update routine "+routine.id);
+                .fail(()=> {
+                    if(this.props.callback)
+                        this.props.callback(false);
+                });
         else
             api.routines.add(routine)
                 .done(()=> {
                     if(this.props.callback)
-                        this.props.callback();
+                        this.props.callback(true);
                 })
-                .fail("Failed to create routine");
+                .fail(()=> {
+                    if(this.props.callback)
+                        this.props.callback(false);
+                });
 
         this.props.toggle();
         this.componentWillMount();
