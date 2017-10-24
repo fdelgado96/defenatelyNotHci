@@ -9,6 +9,8 @@ import PopUpAC from './PopUpAC';
 import PopUpDoor from './PopUpDoor';
 import PopUpRefrigerator from './PopUpRefrigerador';
 import PopUpBlind from './PopUpBlind';
+import PopUpTimer from './PopUpTimer';
+import PopUpAlarm from './PopUpAlarm';
 
 import '../css/Lists.css'
 import "../css/PopUp.css"
@@ -20,6 +22,7 @@ class Dispositivos extends React.Component{
     }
 
     componentWillMount(){
+        console.log("refreshing");
         api.room.getDevices(this.props.id)
             .done((data) => {
                 this.setState({devices : data.devices});
@@ -27,8 +30,10 @@ class Dispositivos extends React.Component{
             .fail(() => {console.log("failed")}
 
             )
+    }
 
-
+    componentWillUpdate(){
+        this.componentWillMount();
     }
 
    render(){
@@ -97,12 +102,12 @@ function PopUpSelector(props){
         case"lsf78ly0eqrjbz91":
             return <PopUpDoor id={props.id} name={props.name} closeModal={props.closeModal}/>;
 
-        // case "mxztsyjzsrq7iaqc":
-        //     return <PopUpAlarm id={props.id} name={props.name} closeModal={props.closeModal}/>;
-        //
-        // case "ofglvd9gqX8yfl3l":
-        //     return <PopUpTimer id={props.id} name={props.name} closeModal={props.closeModal}/>;
-        //
+        case "mxztsyjzsrq7iaqc":
+            return <PopUpAlarm id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
+        case "ofglvd9gqX8yfl3l":
+            return <PopUpTimer id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
         case "rnizejqr2di0okho":
             return <PopUpRefrigerator id={props.id} name={props.name} closeModal={props.closeModal}/>;
 

@@ -17,8 +17,12 @@ class Ambiente extends React.Component {
         this.refresh();
     }
 
+    componentWillUpdate(){
+        this.refresh();
+    }
+
     refresh() {
-        console.log("refreshing");
+        console.log("lelwet");
         api.routines.list()
             .done((data) => {
                 this.setState({

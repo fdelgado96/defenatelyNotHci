@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import logo from '../images/logo.png';
 import "../css/Header.css"
+import GenerateNav from './GenerateNav';
 
 export default class Header extends Component {
     constructor(props) {
@@ -24,32 +25,27 @@ export default class Header extends Component {
                     <NavbarBrand href="#"><img src={logo} className="logo" alt="logo"/><span className="brand">Smart<span className="brand-colored">HOME</span></span></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink active={this.props.active === "general"} onClick={()=>this.props.callback("general")} href="#">GENERAL</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "cocina"} onClick={()=>this.props.callback("cocina")} href="#">COCINA</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "living"} onClick={()=>this.props.callback("living")} href="#">LIVING</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "dormitorios"} onClick={()=>this.props.callback("dormitorios")} href="#">DORMITORIOS</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "lavadero"} onClick={()=>this.props.callback("lavadero")} href="#">LAVADERO</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "baños"} onClick={()=>this.props.callback("baños")} href="#">BAÑOS</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "administracion"} onClick={()=>this.props.callback("administracion")} href="#">ADMINISTRACIÓN</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active={this.props.active === "ayuda"} onClick={()=>this.props.callback("ayuda")} href="#">AYUDA</NavLink>
-                            </NavItem>
-                        </Nav>
+                        <GenerateNav active={this.props.active} callback={this.props.callback}/>
+                        {/*<Nav className="ml-auto" navbar>*/}
+                            {/*<NavItem>*/}
+                                {/*<NavLink active={this.props.active === "cocina"} onClick={()=>this.props.callback("cocina")} href="#">COCINA</NavLink>*/}
+                            {/*</NavItem>*/}
+                            {/*<NavItem>*/}
+                                {/*<NavLink active={this.props.active === "living"} onClick={()=>this.props.callback("living")} href="#">LIVING</NavLink>*/}
+                            {/*</NavItem>*/}
+                            {/*<NavItem>*/}
+                                {/*<NavLink active={this.props.active === "dormitorios"} onClick={()=>this.props.callback("dormitorios")} href="#">DORMITORIOS</NavLink>*/}
+                            {/*</NavItem>*/}
+                            {/*<NavItem>*/}
+                                {/*<NavLink active={this.props.active === "lavadero"} onClick={()=>this.props.callback("lavadero")} href="#">LAVADERO</NavLink>*/}
+                            {/*</NavItem>*/}
+                            {/*<NavItem>*/}
+                                {/*<NavLink active={this.props.active === "baños"} onClick={()=>this.props.callback("baños")} href="#">BAÑOS</NavLink>*/}
+                            {/*</NavItem>*/}
+                            {/*<NavItem>*/}
+                                {/*<NavLink active={this.props.active === "administracion"} onClick={()=>this.props.callback("administracion")} href="#">ADMINISTRACIÓN</NavLink>*/}
+                            {/*</NavItem>*/}
+                        {/*</Nav>*/}
                     </Collapse>
                 </Navbar>
             </div>

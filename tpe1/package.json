@@ -8,9 +8,11 @@
     "popper.js": "1.12.5",
     "react": "^15.0.0",
     "react-bootstrap-modal": "^3.0.1",
+    "react-circular-progressbar": "^0.5.0",
     "react-color": "^2.13.8",
     "react-color-picker": "^4.0.2",
     "react-dom": "^15.0.0",
+    "react-progressbar.js": "^0.2.0",
     "react-scripts": "1.0.14",
     "react-simplert": "0.0.2",
     "reactstrap": "^5.0.0-alpha.3"
