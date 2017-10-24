@@ -22,7 +22,8 @@ export default class EditarFuncion extends Component {
             devices: [],
             rooms: [],
             showAlert: false,
-            alertMessage: ""
+            alertMessage: "",
+            alertType: ""
         };
     }
 
@@ -38,6 +39,7 @@ export default class EditarFuncion extends Component {
                 })
                 .fail(() => {
                     this.setState({
+                        alertType: "error",
                         alertMessage: "Hubo un error al intentar cargar la función",
                         showAlert: true
                     })
@@ -60,6 +62,7 @@ export default class EditarFuncion extends Component {
                 })
                 .fail(() => {
                     this.setState({
+                        alertType: "error",
                         alertMessage: "Hubo un error al intentar cargar la lista de dispositivos",
                         showAlert: true
                     })
@@ -74,6 +77,7 @@ export default class EditarFuncion extends Component {
                 })
                 .fail(() => {
                     this.setState({
+                        alertType: "error",
                         alertMessage: "Hubo un error al intentar cargar la lista de dispositivos",
                         showAlert: true
                     })
@@ -88,6 +92,7 @@ export default class EditarFuncion extends Component {
             })
             .fail(() => {
                 this.setState({
+                    alertType: "error",
                     alertMessage: "Hubo un error al intentar cargar la lista de ambientes",
                     showAlert: true
                 })
@@ -95,6 +100,24 @@ export default class EditarFuncion extends Component {
     }
 
     apply() {
+        if(this.state.name === "") {
+            this.setState({
+                alertType: "warning",
+                alertMessage: "Debe especificar un nombre",
+                showAlert: true
+            });
+            return;
+        }
+
+        if(this.state.actions.length == 0) {
+            this.setState({
+                alertType: "warning",
+                alertMessage: "Debe especificar al menos una acción",
+                showAlert: true
+            });
+            return;
+        }
+
         const routine = {
             id: this.props.id,
             name: this.state.name,
@@ -154,6 +177,7 @@ export default class EditarFuncion extends Component {
             })
             .fail(() => {
                 this.setState({
+                    alertType: "error",
                     alertMessage: "Hubo un error al intentar cargar la lista de dispositivos",
                     showAlert: true
                 })
@@ -201,7 +225,7 @@ export default class EditarFuncion extends Component {
                         <Button color="secondary" onClick={this.cancel}>Cancelar</Button>
                     </ModalFooter>
                 </Form>
-                <Simplert showSimplert={this.state.showAlert} type={"error"} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
                           onClose={this.closeAlert}/>
             </Modal>
         );
