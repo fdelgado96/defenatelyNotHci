@@ -1,0 +1,16 @@
+.no-padding {
+    padding: 0px 0px 0px 0px;
+}
+
+.list-background-color{
+    background-color: #E5E6EA;
+}
+h1 {
+    font-family: "Arial", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 36px;
+}
+

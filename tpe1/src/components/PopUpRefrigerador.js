@@ -86,7 +86,7 @@ class PopUpRefrigerador extends React.Component{
                     </div>
                     <div className="popup-item">
                         <h6>Temperatura de Freezer:</h6>
-                        <Input type="range" value={this.state.temperature} className="Slider" min={this.state.minFreezerTemp} max={this.state.maxFreezerTemp} onChange={this.setFreezerTemperature}/>
+                        <Input type="range" value={this.state.freezerTemperature} className="Slider" min={this.state.minFreezerTemp} max={this.state.maxFreezerTemp} onChange={this.setFreezerTemperature}/>
                     </div>
                 </ModalBody>
                 <ModalFooter>

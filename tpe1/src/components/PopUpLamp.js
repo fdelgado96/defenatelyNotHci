@@ -67,10 +67,6 @@ class PopUpLamp extends React.Component{
     handleSubmit(event){
         event.preventDefault();
 
-        console.log(this.state.status);
-        console.log(this.state.id)
-
-
         api.devices.putDevice(this.state.id,"changeBrightness",[this.state.brightness])
         .always(()=>
             api.devices.putDevice(this.state.id,"changeColor",[this.state.color.substring(1)])
@@ -95,12 +91,12 @@ class PopUpLamp extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <ModalHeader>{this.props.name}</ModalHeader>
                 <ModalBody>
-                    <div className="popup-item">
-                        <h6>Brightness</h6>
-                        <input type="range" className="input-group form-control-range" value={this.state.brightness} name="brightness" min={this.state.minBrightness} max={this.state.maxBrightness} onChange={this.handleBrightnessChange}/>
+                    <div className=" popup-item ">
+                        <h6>Intensidad:</h6>
+                        <input type="range" className="input-group form-control-range " value={this.state.brightness} name="brightness" min={this.state.minBrightness} max={this.state.maxBrightness} onChange={this.handleBrightnessChange}/>
                     </div>
-                    <div className="popup-item">
-                        <h6>Activar</h6>
+                    <div className="popup-item ">
+                        <h6>Activar:</h6>
                         <div className="input-group">
                             <label className="switch active">
                                 <input type="checkbox" name="activarLampara"  checked={this.state.status === "on" ? "checked" : ""} onChange={this.handleStatusChange}/>
@@ -108,9 +104,11 @@ class PopUpLamp extends React.Component{
                             </label>
                         </div>
                     </div>
-                    <div className="popup-item">
+                    <div className="popup-item ">
                         <h6>Color:</h6>
-                        <CirclePicker color={this.state.color} onChangeComplete={this.handleColorChange}/>
+                        <div className="color-picker-background">
+                            <CirclePicker className="popup-width" color={this.state.color} onChangeComplete={this.handleColorChange}/>
+                        </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>

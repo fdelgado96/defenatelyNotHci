@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../api';
-import orangeCog from '../images/orangeCog.png';
+import whiteCog from '../images/whiteCog.jpg';
 import {Modal, ModalBody, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
 import * as $ from "jquery";
 import PopUpLamp from './PopUpLamp';
@@ -8,8 +8,10 @@ import PopUpOven from './PopUpOven';
 import PopUpAC from './PopUpAC';
 import PopUpDoor from './PopUpDoor';
 import PopUpRefrigerator from './PopUpRefrigerador';
+import PopUpBlind from './PopUpBlind';
 
-
+import '../css/Lists.css'
+import "../css/PopUp.css"
 
 class Dispositivos extends React.Component{
     constructor(props){
@@ -32,7 +34,7 @@ class Dispositivos extends React.Component{
    render(){
        const listDevices = this.state.devices.map((device) => {
            return (
-               <ListGroupItem>
+               <ListGroupItem className="list-background-color">
                    <Dispositivo key={device.id} name={device.name} typeId={device.typeId} id={device.id}/>
                </ListGroupItem>
            )
@@ -64,15 +66,15 @@ class Dispositivo extends React.Component{
 
                 <ListGroup className="input-group-lg">
                     <ListGroupItemHeading>{this.props.name}</ListGroupItemHeading>
-                    <ListGroupItem>
+                    <ListGroupItem className="no-padding">
                         <button type="button" className="btn col-lg-12 btn-primary" onClick={this.handleClick}>
                             <span className="text-center">Modificar </span>
-                            <img src={orangeCog} width="20" alt="cog"/>
+                            <img src={whiteCog} width="30" alt="cog"/>
                         </button>
                     </ListGroupItem>
                 </ListGroup>
 
-                <Modal isOpen={this.state.open} onExit={this.closeModal} aria-labelledby={this.props.id+"Modal"}>
+                <Modal  style={{width:'400px'}} isOpen={this.state.open} onExit={this.closeModal} aria-labelledby={this.props.id+"Modal"}>
                     <PopUpSelector  id ={this.props.id} typeId={this.props.typeId} name={this.props.name}  closeModal ={this.closeModal}/>
                 </Modal>
 
@@ -104,9 +106,9 @@ function PopUpSelector(props){
         case "rnizejqr2di0okho":
             return <PopUpRefrigerator id={props.id} name={props.name} closeModal={props.closeModal}/>;
 
-        // case "eu0v2xgprrhhg41g":
-        //     return <PopUpBlind id={props.id} name={props.name} closeModal={props.closeModal}/>;
-        //
+        case "eu0v2xgprrhhg41g":
+            return <PopUpBlind id={props.id} name={props.name} closeModal={props.closeModal}/>;
+
         default:
             return (
                 <ModalBody>

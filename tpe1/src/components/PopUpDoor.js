@@ -25,44 +25,56 @@ class PopUpDoor extends React.Component{
                 console.log(data);
                 this.setState({
                     status: data.result.status,
-                    locked: data.result.locked,
+                    locked: data.result.lock,
                 })
             })
             .fail(()=>{
                 console.log("failed")
-            })
+            });
+
     }
 
     handleChange(event){
         if(event.target.name === "activarPuerta") {
-            if (this.state.status === "on") {
-                this.setState({status: "off"});
+            if (this.state.status === "closed") {
+                this.setState({status: "open"});
             }
             else {
-                this.setState({status: "on"});
+                this.setState({status: "closed"});
             }
         }
         else{
-            if (this.state.locked === "on") {
-                this.setState({locked: "off"});
+            if (this.state.locked === "locked") {
+                this.setState({locked: "unlocked"});
             }
             else {
-                this.setState({locked: "on"});
+                this.setState({locked: "locked"});
             }
         }
     }
 
     handleSubmit(event){
         event.preventDefault();
-        let statusParam = this.state.status;
-        let lockedParam = this.state.locked;
+
+        let statusParam;
+        let lockedParam;
+        if(this.state.status === "open")
+            statusParam= "open";
+        else
+            statusParam="close";
+        if(this.state.locked === "locked")
+            lockedParam = "lock";
+        else
+            lockedParam = "unlock";
 
         api.devices.putDevice(this.state.id, statusParam,[])
-            .always(()=> api.devices.putDevice(this.state.id, lockedParam,[]))
+            .always(()=> api.devices.putDevice(this.state.id, lockedParam,[]));
+        this.props.closeModal();
 
     }
 
     render(){
+        console.log(this.state.locked)
         return(
             <Form onSubmit={this.handleSubmit}>
                 <ModalHeader>{this.props.name}</ModalHeader>
@@ -71,7 +83,7 @@ class PopUpDoor extends React.Component{
                         <h6>Abierto:</h6>
                         <div className="input-group">
                             <label className="switch active">
-                                <input type="checkbox" name="activarPuerta"  checked={this.state.status === "on" ? "checked" : ""} onChange={this.handleChange}/>
+                                <input type="checkbox" name="activarPuerta"  checked={this.state.status === "closed" ? "checked" : ""} onChange={this.handleChange}/>
                                 <span className="slider round"/>
                             </label>
                         </div>
@@ -79,7 +91,7 @@ class PopUpDoor extends React.Component{
                             <h6>Cerrado Con llave:</h6>
                             <div className="input-group">
                                 <label className="switch active">
-                                    <input type="checkbox" name="CerrarPuertaConLlave"  checked={this.state.locked === "on" ? "checked" : ""} onChange={this.handleChange}/>
+                                    <input type="checkbox" name="CerrarPuertaConLlave"  checked={this.state.locked === "locked" ? "checked" : ""} onChange={this.handleChange}/>
                                     <span className="slider round"/>
                                 </label>
                             </div>
