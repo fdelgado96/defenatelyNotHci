@@ -23,7 +23,6 @@ class Dispositivos extends React.Component{
     }
 
     componentWillMount(){
-        console.log("refreshing");
         api.room.getDevices(this.props.id)
             .done((data) => {
                 this.setState({devices : data.devices});
@@ -66,7 +65,7 @@ class Dispositivo extends React.Component{
 
     render() {
         return(
-            <InputGroup className="dispositivo">
+            <InputGroup className="dispositivo justify-content-center">
                 <InputGroupAddon className="dispositivo-text">{this.props.name}</InputGroupAddon>
                 <Modal  style={{width:'400px'}} isOpen={this.state.open} onExit={this.closeModal} aria-labelledby={this.props.id+"Modal"}>
                     <PopUpSelector  id ={this.props.id} typeId={this.props.typeId} name={this.props.name}  closeModal ={this.closeModal}/>

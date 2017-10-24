@@ -2,6 +2,7 @@ import React from 'react';
 import Dispositivos from "./Dispositivos";
 import Funciones from './Funciones';
 import api from '../api'
+import '../css/Ambiente.css'
 
 
 class Ambiente extends React.Component {
@@ -22,7 +23,6 @@ class Ambiente extends React.Component {
     }
 
     refresh() {
-        console.log("lelwet");
         api.routines.list()
             .done((data) => {
                 this.setState({
@@ -36,7 +36,7 @@ class Ambiente extends React.Component {
 
     render(){
         return (
-            <div>
+            <div className="ambientes">
                 <div className="container row mx-auto">
                     <div className="col-lg-6 mx-auto">
                         <h1>Dispositivos</h1>
