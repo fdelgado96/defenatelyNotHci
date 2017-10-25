@@ -58,9 +58,9 @@ class PopUpRefrigerador extends React.Component{
     handleSubmit(event){
         event.preventDefault();
         api.devices.putDevice(this.state.id, "setFreezerTemperature",[this.state.freezerTemperature])
-            .always(()=>
+            .done(()=>
                 api.devices.putDevice(this.state.id, "setTemperature",[this.state.temperature])
-                    .always(()=>
+                    .done(()=>
                         api.devices.putDevice(this.state.id, "setMode",[this.state.mode])
                     )
             )
@@ -75,9 +75,9 @@ class PopUpRefrigerador extends React.Component{
                     <div className="popup-item">
                         <h6>Modo:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="default" onClick={this.setMode}>Default</Button>
-                            <Button color="primary" name="vacation" onClick={this.setMode}>Vacation</Button>
-                            <Button color="primary" name="party" onClick={this.setMode}>Party</Button>
+                            <Button color="primary" name="default" onClick={this.setMode} active={this.state.mode === "default"}>Default</Button>
+                            <Button color="primary" name="vacation" onClick={this.setMode} active={this.state.mode === "vacation"}>Vacation</Button>
+                            <Button color="primary" name="party" onClick={this.setMode} active={this.state.mode === "party"}>Party</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">

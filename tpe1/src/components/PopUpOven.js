@@ -107,25 +107,25 @@ class PopUpOven extends React.Component{
                     <div className="popup-item">
                         <h6>Modo de Calor:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="top" onClick={this.setHeatMode}>Top</Button>
-                            <Button color="primary" name="bottom" onClick={this.setHeatMode}>Bottom</Button>
-                            <Button color="primary" name="conventional" onClick={this.setHeatMode}>Conventional</Button>
+                            <Button color="primary" name="top" onClick={this.setHeatMode} active={this.state.heat === "top"}>Top</Button>
+                            <Button color="primary" name="bottom" onClick={this.setHeatMode} active={this.state.heat === "bottom"}>Bottom</Button>
+                            <Button color="primary" name="conventional" onClick={this.setHeatMode} active={this.state.heat === "conventional"}>Conventional</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
                         <h6>Modo Parilla:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="large" onClick={this.setGrillMode}>Large</Button>
-                            <Button color="primary" name="eco" onClick={this.setGrillMode}>Eco</Button>
-                            <Button color="primary" name="off" onClick={this.setGrillMode}>Off</Button>
+                            <Button color="primary" name="large" onClick={this.setGrillMode} active={this.state.grill === "large"}>Large</Button>
+                            <Button color="primary" name="eco" onClick={this.setGrillMode} active={this.state.grill === "eco"}>Eco</Button>
+                            <Button color="primary" name="off" onClick={this.setGrillMode} active={this.state.grill === "off"}>Off</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
                         <h6>Modo convección:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="normal" onClick={this.setConvectionMode}>Normal</Button>
-                            <Button color="primary" name="eco" onClick={this.setConvectionMode}>Eco</Button>
-                            <Button color="primary" name="off" onClick={this.setConvectionMode}>Off</Button>
+                            <Button color="primary" name="normal" onClick={this.setConvectionMode} active={this.state.convection === "normal"}>Normal</Button>
+                            <Button color="primary" name="eco" onClick={this.setConvectionMode} active={this.state.convection === "eco"}>Eco</Button>
+                            <Button color="primary" name="off" onClick={this.setConvectionMode} active={this.state.convection === "off"}>Off</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">

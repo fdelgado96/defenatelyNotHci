@@ -70,9 +70,9 @@ class PopUpAlarm extends React.Component{
                 <ModalBody>
                     <div className="popup-item">
                         <ButtonGroup>
-                            <Button color="primary" name="disarm" onClick={this.changeState}>Deshabilitar</Button>
-                            <Button color="primary" name="armAway" onClick={this.changeState}>ArmAway</Button>
-                            <Button color="primary" name="armStay" onClick={this.changeState}>ArmAway</Button>
+                            <Button color="primary" name="disarm" onClick={this.changeState} active={this.state.status === "disarm"}>Deshabilitar</Button>
+                            <Button color="primary" name="armAway" onClick={this.changeState} active={this.state.status === "armAway"}>ArmAway</Button>
+                            <Button color="primary" name="armStay" onClick={this.changeState} active={this.state.status === "armStay"}>ArmAway</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">

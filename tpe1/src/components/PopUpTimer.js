@@ -58,13 +58,19 @@ class PopUpTimer extends React.Component{
     changeState(event){
         if(event.target.name === "start"){
             api.devices.putDevice(this.state.id, "start",[])
-                .done(()=>this.setState({remaining: this.state.interval}))
+                .done(()=>this.setState({
+                    remaining: this.state.interval,
+                    status: "active"
+                }))
                 // .fail(()) si failea por que ajax topkekea mostrarlo
 
         }
         else if(event.target.name === "stop"){
             api.devices.putDevice(this.state.id,"stop", [])
-                .done(()=>this.setState({remaining: 0}))
+                .done(()=>this.setState({
+                    remaining: 0,
+                    status: "inactive"
+                }))
         }
     };
 
@@ -135,8 +141,8 @@ class PopUpTimer extends React.Component{
                     </div>
                     <div className="popup-item">
                         <ButtonGroup>
-                            <Button color="primary" name="start" onClick={this.changeState}>Empezar</Button>
-                            <Button color="primary" name="stop" onClick={this.changeState}>Frenar</Button>
+                            <Button color="primary" name="start" onClick={this.changeState} active={this.state.status === "active"}>Empezar</Button>
+                            <Button color="primary" name="stop" onClick={this.changeState} active={this.state.status === "inactive"}>Frenar</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">

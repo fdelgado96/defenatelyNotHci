@@ -85,8 +85,10 @@ class PopUpBlind extends React.Component{
                 <ModalBody>
                     <h6>Activar:</h6>
                     <ButtonGroup>
-                        <Button color="primary" name="up" onClick={this.changeBlindState}>Subir</Button>
-                        <Button color="primary" name="down" onClick={this.changeBlindState}>Bajar</Button>
+                        <Button color="primary" name="up" onClick={this.changeBlindState}
+                                active={this.state.status === "opening" || this.state.status === "open"}>Subir</Button>
+                        <Button color="primary" name="down" onClick={this.changeBlindState}
+                                active={this.state.status === "closing" || this.state.status === "closed"}>Bajar</Button>
                     </ButtonGroup>
                     <div>
                         <h6>Nivel de las Persianas:</h6>

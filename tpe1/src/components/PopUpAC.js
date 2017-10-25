@@ -90,19 +90,23 @@ class PopUpAC extends React.Component{
 
         api.devices.putDevice(this.state.id,"setTemperature",[this.state.temperature])
             .always(()=>
-                api.devices.putDevice(this.state.id,"setHeat",[this.state.heat])
+                api.devices.putDevice(this.state.id,"setMode",[this.state.mode])
                     .always(()=>
-                        api.devices.putDevice(this.state.id,"setGrill",[this.state.grill])
+                        api.devices.putDevice(this.state.id,"setVerticalSwing",[this.state.verticalSwing])
                             .always(()=>
-                                api.devices.putDevice(this.state.id,"setConvection",[this.state.convection])
-                                    .always(()=>{
-                                        if(this.state.status === "on") {
-                                            api.devices.putDevice(this.state.id, "turnOn",[]);
-                                            console.log("in if: "+this.state.status);
-                                        }
-                                        else
-                                            api.devices.putDevice(this.state.id,"turnOff",[]);
-                                    })
+                                api.devices.putDevice(this.state.id,"setHorizontalSwing",[this.state.horizontalSwing])
+                                    .always(()=>
+                                        api.devices.putDevice(this.state.id,"setFanSpeed",[this.state.fanSpeed])
+                                            .always(()=>{
+                                                if(this.state.status === "on") {
+                                                  api.devices.putDevice(this.state.id, "turnOn",[]);
+                                                  console.log("in if: "+this.state.status);
+                                                }
+                                                else
+                                                   api.devices.putDevice(this.state.id,"turnOff",[]);
+                                             })
+                                    )
+
                             )
                     )
             )
@@ -119,40 +123,40 @@ class PopUpAC extends React.Component{
                     <div className="popup-item">
                         <h6>Modo:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="cool" onClick={this.setMode}>Cool</Button>
-                            <Button color="primary" name="heat" onClick={this.setMode}>Heat</Button>
-                            <Button color="primary" name="fan" onClick={this.setMode}>Fan</Button>
+                            <Button color="primary" name="cool" onClick={this.setMode} active={this.state.mode === "cool"}>Cool</Button>
+                            <Button color="primary" name="heat" onClick={this.setMode} active={this.state.mode === "heat"}>Heat</Button>
+                            <Button color="primary" name="fan" onClick={this.setMode} active={this.state.mode === "fan"}>Fan</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
                         <h6>Oscilación Vertical:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="auto" onClick={this.setVerticalSwing}>Auto</Button>
-                            <Button color="primary" name="22" onClick={this.setVerticalSwing}>22</Button>
-                            <Button color="primary" name="45" onClick={this.setVerticalSwing}>45</Button>
-                            <Button color="primary" name="67" onClick={this.setVerticalSwing}>67</Button>
-                            <Button color="primary" name="90" onClick={this.setVerticalSwing}>90</Button>
+                            <Button color="primary" name="auto" onClick={this.setVerticalSwing} active={this.state.verticalSwing === "auto"}>Auto</Button>
+                            <Button color="primary" name="22" onClick={this.setVerticalSwing} active={this.state.verticalSwing === "22"}>22</Button>
+                            <Button color="primary" name="45" onClick={this.setVerticalSwing} active={this.state.verticalSwing === "45"}>45</Button>
+                            <Button color="primary" name="67" onClick={this.setVerticalSwing} active={this.state.verticalSwing === "67"}>67</Button>
+                            <Button color="primary" name="90" onClick={this.setVerticalSwing} active={this.state.verticalSwing === "90"}>90</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
                         <h6>Oscilación Horizontal:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="auto" onClick={this.setHorizontalSwing}>Auto</Button>
-                            <Button color="primary" name="-90" onClick={this.setHorizontalSwing}>-90</Button>
-                            <Button color="primary" name="-45" onClick={this.setHorizontalSwing}>-45</Button>
-                            <Button color="primary" name="0" onClick={this.setHorizontalSwing}>0</Button>
-                            <Button color="primary" name="45" onClick={this.setHorizontalSwing}>45</Button>
-                            <Button color="primary" name="90" onClick={this.setHorizontalSwing}>90</Button>
+                            <Button color="primary" name="auto" onClick={this.setHorizontalSwing} active={this.state.horizontalSwing === "auto"}>Auto</Button>
+                            <Button color="primary" name="-90" onClick={this.setHorizontalSwing} active={this.state.horizontalSwing === "-90"}>-90</Button>
+                            <Button color="primary" name="-45" onClick={this.setHorizontalSwing} active={this.state.horizontalSwing === "-45"}>-45</Button>
+                            <Button color="primary" name="0" onClick={this.setHorizontalSwing} active={this.state.horizontalSwing === "0"}>0</Button>
+                            <Button color="primary" name="45" onClick={this.setHorizontalSwing} active={this.state.horizontalSwing === "45"}>45</Button>
+                            <Button color="primary" name="90" onClick={this.setHorizontalSwing} active={this.state.horizontalSwing === "90"}>90</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
                         <h6>Velocidad del Ventilador:</h6>
                         <ButtonGroup>
-                            <Button color="primary" name="auto" onClick={this.setFanSpeed}>Auto</Button>
-                            <Button color="primary" name="25" onClick={this.setFanSpeed}>25</Button>
-                            <Button color="primary" name="50" onClick={this.setFanSpeed}>50</Button>
-                            <Button color="primary" name="75" onClick={this.setFanSpeed}>75</Button>
-                            <Button color="primary" name="100" onClick={this.setFanSpeed}>100</Button>
+                            <Button color="primary" name="auto" onClick={this.setFanSpeed} active={this.state.fanSpeed === "auto"}>Auto</Button>
+                            <Button color="primary" name="25" onClick={this.setFanSpeed} active={this.state.fanSpeed === "25"}>25</Button>
+                            <Button color="primary" name="50" onClick={this.setFanSpeed} active={this.state.fanSpeed === "50"}>50</Button>
+                            <Button color="primary" name="75" onClick={this.setFanSpeed} active={this.state.fanSpeed === "75"}>75</Button>
+                            <Button color="primary" name="100" onClick={this.setFanSpeed} active={this.state.fanSpeed === "100"}>100</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
