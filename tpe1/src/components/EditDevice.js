@@ -222,7 +222,7 @@ function RoomSelect(props) {
     );
     return (
         <Input type="select" name="room" value={props.value} onChange={props.handler}>
-            <option value="{}" >Seleccione</option>
+            <option value="{}" selected disabled hidden>Seleccione</option>
             {roomOptions}
         </Input>
     );
@@ -235,7 +235,7 @@ function TypeSelect(props) {
     );
     return (
         <Input type="select" name="type" value={props.value} onChange={props.handler}>
-            <option value="" >Seleccione</option>
+            <option value="" selected disabled hidden>Seleccione</option>
             {typeOptions}
         </Input>
     );

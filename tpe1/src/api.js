@@ -35,6 +35,16 @@ api.room = class{
         });
     }
 
+    static addDevice(room, device) {
+        return $.ajax({
+            url: api.baseUrl + "devices/" + device + "/rooms/" + room,
+            method: "POST",
+            dataType: "json",
+            timeout: api.timeout,
+            data: {}
+        });
+    }
+
     static modify(room) {
         return $.ajax({
             url: api.room.url + room.id,

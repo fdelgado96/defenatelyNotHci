@@ -1,7 +1,7 @@
 import React from 'react';
 import api from '../api'
 import arrow from '../images/arrow.png';
-import {Modal, ModalHeader, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, InputGroup, InputGroupAddon, InputGroupButton, Button, Label, Input, Form, FormGroup, ModalBody, ModalFooter} from 'reactstrap';
+import {Modal, ModalHeader, ListGroup, InputGroup, InputGroupAddon, InputGroupButton, Button, Label, Input, Form, FormGroup, ModalBody, ModalFooter} from 'reactstrap';
 import Simplert from 'react-simplert'
 
 class Administracion extends React.Component {
@@ -13,7 +13,7 @@ class Administracion extends React.Component {
             id: "0086b49564394504",
             name: "living",
             rooms: [],
-            visible: true
+            visible: false
         };
     }
 
@@ -42,7 +42,7 @@ class Administracion extends React.Component {
         return (
             <div>
                 <Agregar visible={this.state.visible} id={this.state.roomId} rooms={this.state.rooms} toggle={() => {this.setState({visible: !this.state.visible})}}/>
-                <h1></h1>
+                <h1> </h1>
                 <div className="container row mx-auto">
                     <div className="col-lg-6 mx-auto">
                         <h1>Areas</h1>
@@ -72,13 +72,11 @@ class Agregar extends React.Component {
     }
 
     changeRoom(event) {
-        this.state.id = event.target.value;
-        this.setState(this.state);
+        this.setState({id: event.target.value});
     }
 
     changeType(event) {
-        this.state.type = event.target.value;
-        this.setState(this.state);
+        this.setState({type: event.target.value});
     }
 
     apply() {
@@ -91,11 +89,13 @@ class Agregar extends React.Component {
             return;
         }
 
-        api.devices.add("{\"typeId\": \"" + this.state.type + "\",\"name\": " + this.state.name + ",\"meta\": {}}")
-            .done(() => this.props.toggle())
-            .fail(() => console.log("List areas Failed"));
-
-        this.props.toggle();
+        api.devices.add({typeId: this.state.type, name: this.state.name, meta: "{}"})
+            .done((data) => {
+                api.room.addDevice(this.state.id, data.device.id)
+                .done((data) => this.props.toggle())
+                .fail(() => console.log("create areas Failed"))
+            })
+            .fail(() => console.log("create areas Failed"));
     }
 
     render() {
@@ -120,7 +120,6 @@ class Agregar extends React.Component {
                             <FormGroup>
                                 <Label>Area</Label>
                                 <Input type="select" name="rooms" value={this.state.id} onChange={this.changeRoom}>
-                                    <option value="">Todas</option>
                                     {roomOptions}
                                 </Input>
                             </FormGroup>
@@ -137,14 +136,10 @@ class Agregar extends React.Component {
 }
 
 class Area extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return <button type="button" className="btn col-lg-12" onClick={() => this.props.callback(this.props.id, this.props.name)}>
             <span>{this.props.name} (id: {this.props.id})</span>
-            <img src={arrow} width="30"/>
+            <img src={arrow} width="30" alt="expand"/>
         </button>
     }
 }

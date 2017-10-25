@@ -9,6 +9,7 @@ import Simplert from 'react-simplert'
 export default class EditarFuncion extends Component {
     constructor(props) {
         super(props);
+        this.loadDevices = this.loadDevices.bind(this);
         this.apply = this.apply.bind(this);
         this.cancel = this.cancel.bind(this);
         this.changeName = this.changeName.bind(this);
@@ -37,13 +38,15 @@ export default class EditarFuncion extends Component {
                         actions: data.routine.actions,
                         room: data.routine.meta
                     });
+                    this.loadDevices();
                 })
                 .fail(() => {
                     this.setState({
                         alertType: "error",
                         alertMessage: "Hubo un error al intentar cargar la función",
                         showAlert: true
-                    })
+                    });
+                    this.loadDevices();
                 });
         }
         else {
@@ -52,8 +55,25 @@ export default class EditarFuncion extends Component {
                 actions: [],
                 room: "{}"
             });
+            this.loadDevices();
         }
 
+        api.room.list()
+            .done((data) => {
+                this.setState({
+                    rooms: data.rooms
+                });
+            })
+            .fail(() => {
+                this.setState({
+                    alertType: "error",
+                    alertMessage: "Hubo un error al intentar cargar la lista de ambientes",
+                    showAlert: true
+                })
+            });
+    }
+
+    loadDevices() {
         if(this.state.room === "{}") {
             api.devices.list()
                 .done((data) => {
@@ -84,20 +104,6 @@ export default class EditarFuncion extends Component {
                     })
                 });
         }
-
-        api.room.list()
-            .done((data) => {
-                this.setState({
-                    rooms: data.rooms
-                });
-            })
-            .fail(() => {
-                this.setState({
-                    alertType: "error",
-                    alertMessage: "Hubo un error al intentar cargar la lista de ambientes",
-                    showAlert: true
-                })
-            });
     }
 
     apply() {
@@ -173,6 +179,7 @@ export default class EditarFuncion extends Component {
             .done((data) => {
                 this.setState({
                     room: room,
+                    actions: [],
                     devices: data.devices
                 });
             })
@@ -241,22 +248,27 @@ export default class EditarFuncion extends Component {
 
 function ActionList(props) {
     const actionList = props.actions.map(
-        action =>
-            <tr>
-                <td className="action-text">
-                    {props.devices.find(element => element.id === action.deviceId).name}
-                </td>
-                <td className="action-text">
-                    {action.actionName}
-                </td>
-                <td className="action-text">
-                    {action.params.length > 0 ? action.params[0] : ""}
-                </td>
-                <td className="action-delete">
-                    <Button color="danger" onClick={() => props.callback(action.actionName)}><i className="fa fa-trash"/></Button>
-                </td>
-            </tr>
-    );
+        action => {
+            let device = props.devices.find(element => element.id === action.deviceId);
+            return (
+                <tr>
+                    <td className="action-text">
+                        {device? device.name : ""}
+                    </td>
+                    <td className="action-text">
+                        {action.actionName}
+                    </td>
+                    <td className="action-text">
+                        {action.params.length > 0 ? action.params[0] : ""}
+                    </td>
+                    <td className="action-delete">
+                        <Button color="danger" onClick={() => props.callback(action.actionName)}><i
+                            className="fa fa-trash"/></Button>
+                    </td>
+                </tr>
+            );
+        });
+
     return (
         <tbody>
             {actionList}
