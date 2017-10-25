@@ -189,15 +189,15 @@ class EditDevice extends Component {
                 <Form>
                     <ModalBody>
                         <FormGroup>
-                            <Label>Nombre</Label>
+                            <Label>Nombre*</Label>
                             <Input type="text" name="name" value={this.state.name} onChange={this.changeName}/>
                         </FormGroup>
                         <FormGroup>
-                            <Label>Tipo</Label>
+                            <Label>Tipo*</Label>
                             <TypeSelect value={this.state.type} types={this.state.types} handler={this.changeType}/>
                         </FormGroup>
                         <FormGroup>
-                            <Label>Ambiente</Label>
+                            <Label>Ambiente*</Label>
                             <RoomSelect value={this.state.room} rooms={this.state.rooms} handler={this.changeRoom}/>
                         </FormGroup>
                     </ModalBody>

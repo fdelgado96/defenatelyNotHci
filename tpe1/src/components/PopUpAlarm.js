@@ -26,6 +26,19 @@ class PopUpAlarm extends React.Component{
         this.closeAlert = this.closeAlert.bind(this);
     }
 
+    componentWillMount(){
+        api.devices.getState(this.props.id)
+            .done((data) => {
+            console.log(data);
+                this.setState({
+                    status: data.result.status,
+                })
+            })
+            .fail(()=>{
+                console.log("failed")
+            });
+    }
+
     setLocalCode(event){
         this.setState({localCode: event.target.value})
     }
@@ -39,9 +52,19 @@ class PopUpAlarm extends React.Component{
     openNewCodeModal = () => this.setState({ modalOpen: true })
 
     handleSubmit(event){
-        console.log(this.state.status)
         event.preventDefault();
-        api.devices.putDevice(this.state.id,[this.state.status], [this.state.localCode])
+        let param;
+        if(this.state.status === "disarmed"){
+            param = "disarm";
+        }
+        else if(this.state.status === "armedAway"){
+            param = "armAway";
+        }
+        else{
+            param = "armStay";
+        }
+
+        api.devices.putDevice(this.state.id, param, [this.state.localCode])
             .done((data)=>{
             if(JSON.parse(data).result){
                 this.props.closeModal();
@@ -70,9 +93,9 @@ class PopUpAlarm extends React.Component{
                 <ModalBody>
                     <div className="popup-item">
                         <ButtonGroup>
-                            <Button color="primary" name="disarm" onClick={this.changeState} active={this.state.status === "disarm"}>Deshabilitar</Button>
-                            <Button color="primary" name="armAway" onClick={this.changeState} active={this.state.status === "armAway"}>ArmAway</Button>
-                            <Button color="primary" name="armStay" onClick={this.changeState} active={this.state.status === "armStay"}>ArmAway</Button>
+                            <Button color="primary" name="disarmed" onClick={this.changeState} active={this.state.status === "disarmed"}>Deshabilitar</Button>
+                            <Button color="primary" name="armedAway" onClick={this.changeState} active={this.state.status === "armedAway"}>ArmAway</Button>
+                            <Button color="primary" name="armedStay" onClick={this.changeState} active={this.state.status === "armedStay"}>ArmAway</Button>
                         </ButtonGroup>
                     </div>
                     <div className="popup-item">
@@ -92,7 +115,7 @@ class PopUpAlarm extends React.Component{
                     <button className="btn btn-primary" onClick={this.props.closeModal}>Cerrar</button>
                     <input type="submit" className="btn btn-primary" value="Guardar"/>
                 </ModalFooter>
-                <Simplert minWidth={200} showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
                           onClose={this.closeAlert} disableOverlayClick={true}/>
             </Form>
         );
@@ -107,6 +130,9 @@ class ChangePass extends React.Component{
         this.state= {
             oldCode: 0,
             newCode: 0,
+            showAlert: false,
+            alertMessage: "",
+            alertType: "",
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.setNewCode = this.setNewCode.bind(this);
@@ -116,8 +142,19 @@ class ChangePass extends React.Component{
     handleSubmit(event){
         event.preventDefault();
         api.devices.putDevice(this.props.id, "changeSecurityCode",[this.state.oldCode, this.state.newCode])
-            .done((data=>{}))
-        //si false mostrar que no se pudo cambiar por que la contraseña actual esta mal, si true cerrar, si null error de la api
+            .done((data=>{
+                if(JSON.parse(data).result){
+                    this.props.closeModal();
+                }
+                else{
+                    this.setState({
+                        showAlert: true,
+                        alertMessage: "Codigo de seguridad incorrecto",
+                        alertType: "error"
+                    })
+                }
+            }))
+
     }
 
     setNewCode(event){
@@ -133,11 +170,11 @@ class ChangePass extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <ModalHeader>Cambiar Codigo</ModalHeader>
                 <ModalBody>
-                    <h6>Nuevo Codigo de Seguridad</h6>
+                    <h6>Nuevo Codigo de Seguridad*</h6>
                     <InputGroup>
                         <Input type="text" onChange={this.setNewCode} />
                     </InputGroup>
-                    <h6>Codigo de Seguridad Actual</h6>
+                    <h6>Codigo de Seguridad Actual*</h6>
                     <InputGroup>
                         <Input type="text" onChange={this.setOldCode} />
                     </InputGroup>
@@ -146,6 +183,8 @@ class ChangePass extends React.Component{
                     <button className="btn btn-primary" onClick={this.props.closeModal}>Cerrar</button>
                     <input type="submit" className="btn btn-primary" value="Cambiar"/>
                 </ModalFooter>
+                <Simplert showSimplert={this.state.showAlert} type={this.state.alertType} message={this.state.alertMessage} customCloseBtnText={"Entendido"}
+                          onClose={this.closeAlert} disableOverlayClick={true}/>
             </Form>
         )
     }

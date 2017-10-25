@@ -131,7 +131,7 @@ export default class EditarAmbiente extends Component {
                 <Form>
                     <ModalBody>
                         <FormGroup>
-                            <Label>Nombre</Label>
+                            <Label>Nombre*</Label>
                             <Input type="text" name="name" value={this.state.name} onChange={this.changeName}/>
                         </FormGroup>
                     </ModalBody>
