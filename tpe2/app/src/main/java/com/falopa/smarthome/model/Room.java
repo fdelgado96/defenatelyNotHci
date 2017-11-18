@@ -1,4 +1,4 @@
-package com.falopa.smarthome;
+package com.falopa.smarthome.model;
 
 /**
  * Created by Francisco Delgado on 11/18/2017.
