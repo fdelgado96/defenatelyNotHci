@@ -1,4 +1,4 @@
-package com.falopa.smarthome.activities;
+package com.falopa.smarthome.views;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
