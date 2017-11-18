@@ -1,14 +1,14 @@
 package com.falopa.smarthome.model;
 
-/**
- * Created by Francisco Delgado on 11/18/2017.
- */
+
+import java.util.ArrayList;
 
 public class Room {
-    private int id;
+    private String id;
     private String name;
+    private transient ArrayList<Device> devices;
 
-    public Room(int id, String name){
+    public Room(String id, String name){
         this.id = id;
         this.name = name;
     }
