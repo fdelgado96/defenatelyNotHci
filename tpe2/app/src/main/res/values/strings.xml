@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SmartHome</string>
+    <string name="name">Name</string>
+    <string name="new_room">New Room</string>
+    <string name="done">Done</string>
+    <string name="create_room_success">Room created successfully</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
