@@ -9,10 +9,19 @@ public class Room {
     private transient ArrayList<Device> devices;
     private transient ArrayList<Routine> routines;
 
-    public Room(){}
+    private Room(){}
 
-    public Room(String name){
+    private Room(String id, String name){
+        this.id = id;
         this.name = name;
+    }
+
+    public static Room create(String name) {
+        String id = null;
+        if (id != null) {
+            return new Room(id, name);
+        }
+        return null;
     }
 
     public String getId() {
