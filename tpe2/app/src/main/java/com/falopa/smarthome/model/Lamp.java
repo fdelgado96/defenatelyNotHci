@@ -8,7 +8,7 @@ public class Lamp extends Device {
     private String color;
     private Integer brightness;
 
-    private Lamp(String id, String name, DeviceType type, String roomId) {
+    public Lamp(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 

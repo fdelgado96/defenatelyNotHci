@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Alarm extends Device {
     private String status;
 
-    private Alarm(String id, String name, DeviceType type, String roomId) {
+    public Alarm(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 

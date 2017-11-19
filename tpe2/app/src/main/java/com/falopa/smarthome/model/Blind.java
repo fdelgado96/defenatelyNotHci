@@ -7,7 +7,7 @@ public class Blind extends Device {
     private String status;
     private Integer level;
 
-    private Blind(String id, String name, DeviceType type, String roomId) {
+    public Blind(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 

@@ -11,7 +11,7 @@ public class AC extends Device {
     private String horizontalSwing;
     private String fanSpeed;
 
-    private AC(String id, String name, DeviceType type, String roomId) {
+    public AC(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 

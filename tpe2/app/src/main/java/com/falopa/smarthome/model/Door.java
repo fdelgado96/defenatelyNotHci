@@ -7,7 +7,7 @@ public class Door extends Device {
     private boolean status;
     private boolean locked;
 
-    private Door(String id, String name, DeviceType type, String roomId) {
+    public Door(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 

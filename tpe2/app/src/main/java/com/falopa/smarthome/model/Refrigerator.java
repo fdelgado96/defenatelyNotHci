@@ -8,7 +8,7 @@ public class Refrigerator extends Device {
     private Integer temperature;
     private String mode;
 
-    private Refrigerator(String id, String name, DeviceType type, String roomId) {
+    public Refrigerator(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 

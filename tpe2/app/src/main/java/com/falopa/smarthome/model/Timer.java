@@ -8,7 +8,7 @@ public class Timer extends Device {
     private Integer interval;
     private Integer remaining;
 
-    private Timer(String id, String name, DeviceType type, String roomId) {
+    public Timer(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 
