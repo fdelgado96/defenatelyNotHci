@@ -1,6 +1,8 @@
 package com.falopa.smarthome.model;
 
 
+import com.falopa.smarthome.utils.APIConnector;
+
 public class Door extends Device {
     private boolean status;
     private boolean locked;
@@ -27,15 +29,39 @@ public class Door extends Device {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public boolean setStatus(boolean status) {
+        if(status) {
+            if (APIConnector.doAction(id, "open")) {
+                this.status = status;
+                return true;
+            }
+        }
+        else {
+            if (APIConnector.doAction(id, "close")) {
+                this.status = status;
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isLocked() {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public boolean setLocked(boolean locked) {
+        if(locked) {
+            if (APIConnector.doAction(id, "lock")) {
+                this.locked = locked;
+                return true;
+            }
+        }
+        else {
+            if (APIConnector.doAction(id, "unlock")) {
+                this.locked = locked;
+                return true;
+            }
+        }
+        return false;
     }
 }

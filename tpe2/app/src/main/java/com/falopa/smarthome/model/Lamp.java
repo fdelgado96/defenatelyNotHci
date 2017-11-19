@@ -1,6 +1,8 @@
 package com.falopa.smarthome.model;
 
 
+import com.falopa.smarthome.utils.APIConnector;
+
 public class Lamp extends Device {
     private boolean status;
     private String color;
@@ -28,23 +30,43 @@ public class Lamp extends Device {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public boolean setStatus(boolean status) {
+        if(status) {
+            if (APIConnector.doAction(id, "turnOn")) {
+                this.status = status;
+                return true;
+            }
+        }
+        else {
+            if (APIConnector.doAction(id, "turnOff")) {
+                this.status = status;
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public boolean setColor(String color) {
+        if(APIConnector.doAction(id, "changeColor", new StringParam(color))) {
+            this.color = color;
+            return true;
+        }
+        return false;
     }
 
     public Integer getBrightness() {
         return brightness;
     }
 
-    public void setBrightness(Integer brightness) {
-        this.brightness = brightness;
+    public boolean setBrightness(Integer brightness) {
+        if(APIConnector.doAction(id, "changeBrightness", new IntegerParam(brightness))) {
+            this.brightness = brightness;
+            return true;
+        }
+        return false;
     }
 }

@@ -7,6 +7,7 @@ public class Home {
     private static ArrayList<DeviceType> deviceTypes;
     private static ArrayList<Room> rooms;
     private static ArrayList<Routine> routines;
+    //TODO: mas usados
 
     public static ArrayList<DeviceType> getDeviceTypes() {
         if(deviceTypes == null) {

@@ -1,6 +1,8 @@
 package com.falopa.smarthome.model;
 
 
+import com.falopa.smarthome.utils.APIConnector;
+
 public class AC extends Device {
     private boolean status;
     private Integer temperature;
@@ -31,47 +33,79 @@ public class AC extends Device {
         return false;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public boolean setStatus(boolean status) {
+        if(status) {
+            if (APIConnector.doAction(id, "turnOn")) {
+                this.status = status;
+                return true;
+            }
+        }
+        else {
+            if (APIConnector.doAction(id, "turnOff")) {
+                this.status = status;
+                return true;
+            }
+        }
+        return false;
     }
 
     public Integer getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Integer temperature) {
-        this.temperature = temperature;
+    public boolean setTemperature(Integer temperature) {
+        if(APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature))) {
+            this.temperature = temperature;
+            return true;
+        }
+        return false;
     }
 
     public String getMode() {
         return mode;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
+    public boolean setMode(String mode) {
+        if(APIConnector.doAction(id, "setMode", new StringParam(mode))) {
+            this.mode = mode;
+            return true;
+        }
+        return false;
     }
 
     public String getVerticalSwing() {
         return verticalSwing;
     }
 
-    public void setVerticalSwing(String verticalSwing) {
-        this.verticalSwing = verticalSwing;
+    public boolean setVerticalSwing(String verticalSwing) {
+        if(APIConnector.doAction(id, "setVerticalSwing", new StringParam(verticalSwing))) {
+            this.verticalSwing = verticalSwing;
+            return true;
+        }
+        return false;
     }
 
     public String getHorizontalSwing() {
         return horizontalSwing;
     }
 
-    public void setHorizontalSwing(String horizontalSwing) {
-        this.horizontalSwing = horizontalSwing;
+    public boolean setHorizontalSwing(String horizontalSwing) {
+        if(APIConnector.doAction(id, "setHorizontalSwing", new StringParam(horizontalSwing))) {
+            this.horizontalSwing = horizontalSwing;
+            return true;
+        }
+        return false;
     }
 
     public String getFanSpeed() {
         return fanSpeed;
     }
 
-    public void setFanSpeed(String fanSpeed) {
-        this.fanSpeed = fanSpeed;
+    public boolean setFanSpeed(String fanSpeed) {
+        if(APIConnector.doAction(id, "setFanSpeed", new StringParam(fanSpeed))) {
+            this.fanSpeed = fanSpeed;
+            return true;
+        }
+        return false;
     }
 }

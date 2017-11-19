@@ -1,6 +1,8 @@
 package com.falopa.smarthome.model;
 
 
+import com.falopa.smarthome.utils.APIConnector;
+
 public class Refrigerator extends Device {
     private Integer freezerTemperature;
     private Integer temperature;
@@ -28,23 +30,35 @@ public class Refrigerator extends Device {
         return freezerTemperature;
     }
 
-    public void setFreezerTemperature(Integer freezerTemperature) {
-        this.freezerTemperature = freezerTemperature;
+    public boolean setFreezerTemperature(Integer freezerTemperature) {
+        if(APIConnector.doAction(id, "setFreezerTemperature", new IntegerParam(freezerTemperature))) {
+            this.freezerTemperature = freezerTemperature;
+            return true;
+        }
+        return false;
     }
 
     public Integer getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Integer temperature) {
-        this.temperature = temperature;
+    public boolean setTemperature(Integer temperature) {
+        if(APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature))) {
+            this.temperature = temperature;
+            return true;
+        }
+        return false;
     }
 
     public String getMode() {
         return mode;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
+    public boolean setMode(String mode) {
+        if(APIConnector.doAction(id, "setMode", new StringParam(mode))) {
+            this.mode = mode;
+            return true;
+        }
+        return false;
     }
 }
