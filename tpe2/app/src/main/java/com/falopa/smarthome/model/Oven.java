@@ -10,7 +10,7 @@ public class Oven extends Device {
     private String grill;
     private String convection;
 
-    public Oven(String id, String name, DeviceType type, String roomId) {
+    private Oven(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 
