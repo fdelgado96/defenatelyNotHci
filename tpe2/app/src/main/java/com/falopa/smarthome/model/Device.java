@@ -3,13 +3,43 @@ package com.falopa.smarthome.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Device {
-    private String id;
-    private String name;
-    private String typeId;
+public abstract class Device {
+    protected String id;
+    protected String name;
+    protected String typeId;
     @SerializedName("meta")
-    private String roomId;
+    protected String roomId;
 
-    private transient DeviceType type;
-    private transient Room room;
+    protected transient DeviceType type;
+    protected transient Room room;
+
+    protected Device(String id, String name, DeviceType type, String roomId) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.typeId = type.getId();
+        this.roomId = roomId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public DeviceType getType() {
+        return type;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //public abstract boolean update();
 }
