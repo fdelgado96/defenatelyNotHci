@@ -13,8 +13,22 @@ public class AC extends Device {
         super(id, name, type, roomId);
     }
 
+    public static AC create(String name, DeviceType type, String roomId) {
+        String id = Device.createDevice(name, type, roomId);
+        if (id != null) {
+            return new AC(id, name, type, roomId);
+        }
+        return null;
+    }
+
     public boolean getStatus() {
         return status;
+    }
+
+    @Override
+    public boolean update() {
+        //request
+        return false;
     }
 
     public void setStatus(boolean status) {

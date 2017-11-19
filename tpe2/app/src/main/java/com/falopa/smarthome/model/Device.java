@@ -21,6 +21,10 @@ public abstract class Device {
         this.roomId = roomId;
     }
 
+    protected static String createDevice(String name, DeviceType type, String roomId) {
+        return null;
+    }
+
     public String getId() {
         return id;
     }
@@ -41,5 +45,5 @@ public abstract class Device {
         this.name = name;
     }
 
-    //public abstract boolean update();
+    public abstract boolean update();
 }

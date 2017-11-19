@@ -12,6 +12,21 @@ public class Oven extends Device {
         super(id, name, type, roomId);
     }
 
+    public static Oven create(String name, DeviceType type, String roomId) {
+        String id = Device.createDevice(name, type, roomId);
+        if (id != null) {
+            return new Oven(id, name, type, roomId);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean update() {
+        //request
+        return false;
+    }
+
+
     public boolean getStatus() {
         return status;
     }

@@ -10,6 +10,20 @@ public class Refrigerator extends Device {
         super(id, name, type, roomId);
     }
 
+    public static Refrigerator create(String name, DeviceType type, String roomId) {
+        String id = Device.createDevice(name, type, roomId);
+        if (id != null) {
+            return new Refrigerator(id, name, type, roomId);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean update() {
+        //request
+        return false;
+    }
+
     public Integer getFreezerTemperature() {
         return freezerTemperature;
     }

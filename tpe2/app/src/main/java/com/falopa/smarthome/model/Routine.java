@@ -42,4 +42,9 @@ public class Routine {
     public boolean removeAction(Action action) {
         return actions.remove(action);
     }
+
+    public boolean execute() {
+        //TODO request
+        return  true;
+    }
 }

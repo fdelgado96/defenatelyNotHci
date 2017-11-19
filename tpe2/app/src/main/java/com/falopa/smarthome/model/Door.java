@@ -9,6 +9,20 @@ public class Door extends Device {
         super(id, name, type, roomId);
     }
 
+    public static Door create(String name, DeviceType type, String roomId) {
+        String id = Device.createDevice(name, type, roomId);
+        if (id != null) {
+            return new Door(id, name, type, roomId);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean update() {
+        //request
+        return false;
+    }
+
     public boolean getStatus() {
         return status;
     }
