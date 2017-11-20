@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.falopa.smarthome.R;
 import com.falopa.smarthome.model.Device;
+import com.falopa.smarthome.model.DeviceType;
+import com.falopa.smarthome.model.Door;
 import com.falopa.smarthome.model.Home;
 import com.falopa.smarthome.model.Room;
 
@@ -61,9 +63,12 @@ public class RoomDevicesViewFragment extends ListFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        Device[] devices = new Device[]{
+                new Door("12312","tuvieja", new DeviceType("1231","lel",null), "123123")
+        };
+
         super.onActivityCreated(savedInstanceState);
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, Cheeses.CHEESES));
+        setListAdapter(new DeviceArrayAdapter(getActivity(), devices));
     }
 
     @Override
