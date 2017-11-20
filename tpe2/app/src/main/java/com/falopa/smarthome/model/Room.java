@@ -1,6 +1,8 @@
 package com.falopa.smarthome.model;
 
 
+import com.falopa.smarthome.utils.Callback;
+
 import java.util.ArrayList;
 
 public class Room {
@@ -16,12 +18,12 @@ public class Room {
         this.name = name;
     }
 
-    public static Room create(String name) {
-        String id = null;
-        if (id != null) {
-            return new Room(id, name);
-        }
-        return null;
+    public static void create(String name, Callback callback) {
+        //request
+    }
+
+    public void update(Callback callback) {
+        //request
     }
 
     public String getId() {

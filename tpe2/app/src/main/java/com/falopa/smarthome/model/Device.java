@@ -1,6 +1,8 @@
 package com.falopa.smarthome.model;
 
 
+import com.falopa.smarthome.utils.Callback;
+import com.falopa.smarthome.utils.DeviceAPI;
 import com.google.gson.annotations.SerializedName;
 
 public abstract class Device {
@@ -13,6 +15,13 @@ public abstract class Device {
     protected transient DeviceType type;
     protected transient Room room;
 
+    protected Device(String id, String name, String typeId, String roomId) {
+        this.id = id;
+        this.name = name;
+        this.typeId = typeId;
+        this.roomId = roomId;
+    }
+
     protected Device(String id, String name, DeviceType type, String roomId) {
         this.id = id;
         this.name = name;
@@ -21,8 +30,8 @@ public abstract class Device {
         this.roomId = roomId;
     }
 
-    protected static String createDevice(String name, DeviceType type, String roomId) {
-        return null;
+    public static void create(String name, String typeId, String roomId, Callback callback) {
+        DeviceAPI.createDevice(name, typeId, roomId, callback);
     }
 
     public String getId() {
@@ -45,5 +54,5 @@ public abstract class Device {
         this.name = name;
     }
 
-    public abstract boolean update();
+    public abstract void update(Callback callback);
 }

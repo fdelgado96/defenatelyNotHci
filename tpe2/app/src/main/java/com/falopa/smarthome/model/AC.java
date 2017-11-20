@@ -1,7 +1,9 @@
 package com.falopa.smarthome.model;
 
 
-import com.falopa.smarthome.utils.APIConnector;
+import android.telecom.Call;
+
+import com.falopa.smarthome.utils.DeviceAPI;
 import com.falopa.smarthome.utils.Callback;
 
 public class AC extends Device {
@@ -12,16 +14,12 @@ public class AC extends Device {
     private String horizontalSwing;
     private String fanSpeed;
 
-    public AC(String id, String name, DeviceType type, String roomId) {
-        super(id, name, type, roomId);
+    public AC(String id, String name, String typeId, String roomId) {
+        super(id, name, typeId, roomId);
     }
 
-    public static AC create(String name, DeviceType type, String roomId) {
-        String id = Device.createDevice(name, type, roomId);
-        if (id != null) {
-            return new AC(id, name, type, roomId);
-        }
-        return null;
+    public AC(String id, String name, DeviceType type, String roomId) {
+        super(id, name, type, roomId);
     }
 
     public boolean getStatus() {
@@ -29,25 +27,31 @@ public class AC extends Device {
     }
 
     @Override
-    public boolean update() {
+    public void update(Callback callback) {
         //request
-        return false;
     }
 
     public boolean setStatus(boolean status) {
         final boolean oldStatus = this.status;
-        if(status) {
-            APIConnector.doAction(id, "turnOn", new Callback() {
+        if (status) {
+            DeviceAPI.doAction(id, "turnOn", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     AC.this.status = oldStatus;
                 }
             });
-        }
-        else {
-            APIConnector.doAction(id, "turnOff", new Callback() {
+        } else {
+            DeviceAPI.doAction(id, "turnOff", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     AC.this.status = oldStatus;
                 }
             });
@@ -62,9 +66,13 @@ public class AC extends Device {
 
     public boolean setTemperature(Integer temperature) {
         final int oldTemp = this.temperature;
-        APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
+        DeviceAPI.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 AC.this.temperature = oldTemp;
             }
         });
@@ -78,9 +86,13 @@ public class AC extends Device {
 
     public boolean setMode(String mode) {
         final String oldMode = this.mode;
-        APIConnector.doAction(id, "setMode", new StringParam(mode), new Callback() {
+        DeviceAPI.doAction(id, "setMode", new StringParam(mode), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 AC.this.mode = oldMode;
             }
         });
@@ -94,9 +106,13 @@ public class AC extends Device {
 
     public boolean setVerticalSwing(String verticalSwing) {
         final String oldVerticalSwing = this.verticalSwing;
-        APIConnector.doAction(id, "setVerticalSwing", new StringParam(verticalSwing), new Callback() {
+        DeviceAPI.doAction(id, "setVerticalSwing", new StringParam(verticalSwing), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 AC.this.verticalSwing = oldVerticalSwing;
             }
         });
@@ -110,9 +126,13 @@ public class AC extends Device {
 
     public boolean setHorizontalSwing(String horizontalSwing) {
         final String oldHorizontalSwing = this.horizontalSwing;
-        APIConnector.doAction(id, "setHorizontalSwing", new StringParam(horizontalSwing), new Callback() {
+        DeviceAPI.doAction(id, "setHorizontalSwing", new StringParam(horizontalSwing), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 AC.this.horizontalSwing = oldHorizontalSwing;
             }
         });
@@ -126,9 +146,13 @@ public class AC extends Device {
 
     public boolean setFanSpeed(String fanSpeed) {
         final String oldFanSpeed = this.fanSpeed;
-        APIConnector.doAction(id, "setFanSpeed", new StringParam(fanSpeed), new Callback() {
+        DeviceAPI.doAction(id, "setFanSpeed", new StringParam(fanSpeed), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 AC.this.fanSpeed = oldFanSpeed;
             }
         });

@@ -1,29 +1,32 @@
 package com.falopa.smarthome.model;
 
 
-import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.DeviceAPI;
 import com.falopa.smarthome.utils.Callback;
 
 public class Door extends Device {
     private boolean status;
     private boolean locked;
 
+    public Door(String id, String name, String typeId, String roomId) {
+        super(id, name, typeId, roomId);
+    }
+
     public Door(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 
-    public static Door create(String name, DeviceType type, String roomId) {
-        String id = Device.createDevice(name, type, roomId);
+    /*public static Door create(String name, String typeId, String roomId) {
+        String id = DeviceAPI.createDevice(name, typeId, roomId);
         if (id != null) {
-            return new Door(id, name, type, roomId);
+            return new Door(id, name, typeId, roomId);
         }
         return null;
-    }
+    }*/
 
     @Override
-    public boolean update() {
+    public void update(Callback callback) {
         //request
-        return false;
     }
 
     public boolean getStatus() {
@@ -32,18 +35,25 @@ public class Door extends Device {
 
     public boolean setStatus(boolean status) {
         final boolean oldStatus = this.status;
-        if(status) {
-            APIConnector.doAction(id, "open", new Callback() {
+        if (status) {
+            DeviceAPI.doAction(id, "open", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Door.this.status = oldStatus;
                 }
             });
-        }
-        else {
-            APIConnector.doAction(id, "close", new Callback() {
+        } else {
+            DeviceAPI.doAction(id, "close", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Door.this.status = oldStatus;
                 }
             });
@@ -58,18 +68,25 @@ public class Door extends Device {
 
     public boolean setLocked(boolean locked) {
         final boolean oldLocked = this.locked;
-        if(locked) {
-            APIConnector.doAction(id, "lock", new Callback() {
+        if (locked) {
+            DeviceAPI.doAction(id, "lock", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Door.this.locked = oldLocked;
                 }
             });
-        }
-        else {
-            APIConnector.doAction(id, "unlock", new Callback() {
+        } else {
+            DeviceAPI.doAction(id, "unlock", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Door.this.locked = oldLocked;
                 }
             });

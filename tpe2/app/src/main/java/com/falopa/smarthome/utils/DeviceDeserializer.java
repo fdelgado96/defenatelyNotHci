@@ -1,6 +1,8 @@
 package com.falopa.smarthome.utils;
 
 
+import android.util.Log;
+
 import com.falopa.smarthome.model.AC;
 import com.falopa.smarthome.model.Alarm;
 import com.falopa.smarthome.model.Blind;
@@ -21,6 +23,8 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 
 public class DeviceDeserializer implements JsonDeserializer<Device> {
+    private static final String TAG = "DeviceDeserializer";
+
     @Override
     public Device deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject deviceJson = json.getAsJsonObject();
@@ -30,7 +34,7 @@ public class DeviceDeserializer implements JsonDeserializer<Device> {
         String roomId = deviceJson.getAsJsonPrimitive("meta").getAsString();
         DeviceType type = Home.getDeviceType(typeId);
         if(type == null) {
-            System.out.println("INVALID TYPE, COULDN'T PARSE");
+            Log.e(TAG,"INVALID TYPE, COULDN'T PARSE");
             return null;
         }
         switch(type.getName()) {
@@ -51,7 +55,7 @@ public class DeviceDeserializer implements JsonDeserializer<Device> {
             case "timer":
                 return new Timer(id, name, type, roomId);
             default:
-                System.out.println("UNSUPPORTED TYPE, COULDN'T PARSE");
+                Log.e(TAG, "UNSUPPORTED TYPE, COULDN'T PARSE");
                 return null;
         }
     }

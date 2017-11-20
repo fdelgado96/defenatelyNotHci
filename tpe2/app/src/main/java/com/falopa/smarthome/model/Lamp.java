@@ -1,7 +1,7 @@
 package com.falopa.smarthome.model;
 
 
-import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.DeviceAPI;
 import com.falopa.smarthome.utils.Callback;
 
 public class Lamp extends Device {
@@ -9,22 +9,25 @@ public class Lamp extends Device {
     private String color;
     private Integer brightness;
 
+    public Lamp(String id, String name, String typeId, String roomId) {
+        super(id, name, typeId, roomId);
+    }
+
     public Lamp(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 
-    public static Lamp create(String name, DeviceType type, String roomId) {
-        String id = Device.createDevice(name, type, roomId);
+    /*public static Lamp create(String name, String typeId, String roomId) {
+        String id = DeviceAPI.createDevice(name, typeId, roomId);
         if (id != null) {
-            return new Lamp(id, name, type, roomId);
+            return new Lamp(id, name, typeId, roomId);
         }
         return null;
-    }
+    }*/
 
     @Override
-    public boolean update() {
+    public void update(Callback callback) {
         //request
-        return false;
     }
 
     public boolean getStatus() {
@@ -33,18 +36,25 @@ public class Lamp extends Device {
 
     public boolean setStatus(boolean status) {
         final boolean oldStatus = this.status;
-        if(status) {
-            APIConnector.doAction(id, "turnOn", new Callback() {
+        if (status) {
+            DeviceAPI.doAction(id, "turnOn", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Lamp.this.status = oldStatus;
                 }
             });
-        }
-        else {
-            APIConnector.doAction(id, "turnOff", new Callback() {
+        } else {
+            DeviceAPI.doAction(id, "turnOff", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Lamp.this.status = oldStatus;
                 }
             });
@@ -59,9 +69,13 @@ public class Lamp extends Device {
 
     public boolean setColor(String color) {
         final String oldColor = this.color;
-        APIConnector.doAction(id, "changeColor", new StringParam(color), new Callback() {
+        DeviceAPI.doAction(id, "changeColor", new StringParam(color), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 Lamp.this.color = oldColor;
             }
         });
@@ -75,9 +89,13 @@ public class Lamp extends Device {
 
     public boolean setBrightness(Integer brightness) {
         final int oldBright = this.brightness;
-        APIConnector.doAction(id, "changeBrightness", new IntegerParam(brightness), new Callback() {
+        DeviceAPI.doAction(id, "changeBrightness", new IntegerParam(brightness), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 Lamp.this.brightness = oldBright;
             }
         });

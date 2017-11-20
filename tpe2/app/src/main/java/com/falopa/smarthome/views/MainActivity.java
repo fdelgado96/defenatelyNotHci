@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.falopa.smarthome.R;
+import com.falopa.smarthome.model.Home;
+import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
 
     public final static String EXTRA_ROOM_NAME = com.falopa.smarthome.views.MainActivity.EXTRA_ROOM_NAME;
 
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        APIConnector.init(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,6 +58,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Progress dialog
+        Home.init(new Callback() {
+            @Override
+            public void onSuccess() {
+                //saca progress dialog
+            }
+
+            @Override
+            public void onFail() {
+                //saca progres dialog
+                //no tenes ningun dato, cagamo la fruta
+            }
+        });
     }
 
     @Override

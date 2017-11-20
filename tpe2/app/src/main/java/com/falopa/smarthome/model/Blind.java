@@ -1,29 +1,32 @@
 package com.falopa.smarthome.model;
 
 
-import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.DeviceAPI;
 import com.falopa.smarthome.utils.Callback;
 
 public class Blind extends Device {
     private String status;
     private Integer level;
 
+    public Blind(String id, String name, String typeId, String roomId) {
+        super(id, name, typeId, roomId);
+    }
+
     public Blind(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 
-    public static Blind create(String name, DeviceType type, String roomId) {
-        String id = Device.createDevice(name, type, roomId);
+   /* public static Blind create(String name, String typeId, String roomId) {
+        String id = DeviceAPI.createDevice(name, typeId, roomId);
         if (id != null) {
-            return new Blind(id, name, type, roomId);
+            return new Blind(id, name, typeId, roomId);
         }
         return null;
-    }
+    }*/
 
     @Override
-    public boolean update() {
+    public void update(Callback callback) {
         //request
-        return false;
     }
 
     public String getStatus() {
@@ -39,21 +42,28 @@ public class Blind extends Device {
     }
 
     public boolean setOpen(boolean open) {
-        if(open) {
+        if (open) {
             final String oldStatus = this.status;
-            APIConnector.doAction(id, "up", new Callback(){
+            DeviceAPI.doAction(id, "up", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Blind.this.status = oldStatus;
                 }
             });
             this.status = "opening";
-        }
-        else {
+        } else {
             final String oldStatus = this.status;
-            APIConnector.doAction(id, "down", new Callback() {
+            DeviceAPI.doAction(id, "down", new Callback() {
                 @Override
-                public void execute() {
+                public void onSuccess() {
+                }
+
+                @Override
+                public void onFail() {
                     Blind.this.status = oldStatus;
                 }
             });

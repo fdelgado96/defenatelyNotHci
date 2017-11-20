@@ -1,7 +1,7 @@
 package com.falopa.smarthome.model;
 
 
-import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.DeviceAPI;
 import com.falopa.smarthome.utils.Callback;
 
 public class Refrigerator extends Device {
@@ -9,22 +9,25 @@ public class Refrigerator extends Device {
     private Integer temperature;
     private String mode;
 
+    public Refrigerator(String id, String name, String typeId, String roomId) {
+        super(id, name, typeId, roomId);
+    }
+
     public Refrigerator(String id, String name, DeviceType type, String roomId) {
         super(id, name, type, roomId);
     }
 
-    public static Refrigerator create(String name, DeviceType type, String roomId) {
-        String id = Device.createDevice(name, type, roomId);
+    /*public static Refrigerator create(String name, String typeId, String roomId) {
+        String id = DeviceAPI.createDevice(name, typeId, roomId);
         if (id != null) {
-            return new Refrigerator(id, name, type, roomId);
+            return new Refrigerator(id, name, typeId, roomId);
         }
         return null;
-    }
+    }*/
 
     @Override
-    public boolean update() {
+    public void update(Callback callback) {
         //request
-        return false;
     }
 
     public Integer getFreezerTemperature() {
@@ -33,9 +36,13 @@ public class Refrigerator extends Device {
 
     public boolean setFreezerTemperature(Integer freezerTemperature) {
         final int oldTemp = this.freezerTemperature;
-        APIConnector.doAction(id, "setFreezerTemperature", new IntegerParam(freezerTemperature), new Callback() {
+        DeviceAPI.doAction(id, "setFreezerTemperature", new IntegerParam(freezerTemperature), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 Refrigerator.this.freezerTemperature = oldTemp;
             }
         });
@@ -49,9 +56,13 @@ public class Refrigerator extends Device {
 
     public boolean setTemperature(Integer temperature) {
         final int oldTemp = this.temperature;
-        APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
+        DeviceAPI.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 Refrigerator.this.temperature = oldTemp;
             }
         });
@@ -65,9 +76,13 @@ public class Refrigerator extends Device {
 
     public boolean setMode(String mode) {
         final String oldMode = this.mode;
-        APIConnector.doAction(id, "setMode", new StringParam(mode), new Callback() {
+        DeviceAPI.doAction(id, "setMode", new StringParam(mode), new Callback() {
             @Override
-            public void execute() {
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onFail() {
                 Refrigerator.this.mode = oldMode;
             }
         });
