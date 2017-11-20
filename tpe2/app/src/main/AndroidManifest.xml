@@ -30,7 +30,7 @@
         <activity android:name=".views.NewRoom" android:label="@string/new_room">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.falopa.smarthome.views.NewRoom" />
+                android:value="com.falopa.smarthome.views.MainActivity" />
         </activity>
     </application>
 
