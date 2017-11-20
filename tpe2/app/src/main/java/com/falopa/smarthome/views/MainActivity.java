@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +22,11 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public final static String EXTRA_ROOM_NAME = com.falopa.smarthome.views.MainActivity.EXTRA_ROOM_NAME;
+
+    private MyAdapter mAdapter;
+    private ViewPager  mPager;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +93,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            Intent intent = new Intent(this,RoomActivity.class);
-            intent.putExtra(EXTRA_ROOM_NAME,"Cocina");
-            startActivity(intent);
+
+//            toolbar = (Toolbar) findViewById(R.id.toolbar);
+//            setSupportActionBar(toolbar);
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            mPager = (ViewPager) findViewById(R.id.pager);
+            setupViewPager(mPager);
+            setTitle("Cocina");
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mPager);
+
+
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(this, NewRoom.class);
             startActivity(intent);
@@ -105,5 +121,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    private void setupViewPager(ViewPager viewPager) {
+        mAdapter = new MyAdapter(getSupportFragmentManager());
+        mAdapter.addFragment(new RoomDevicesViewFragment(), "Dispositivos");
+        mAdapter.addFragment(new RoomDevicesViewFragment(), "Funciones Personalizadas");
+        viewPager.setAdapter(mAdapter);
     }
 }
