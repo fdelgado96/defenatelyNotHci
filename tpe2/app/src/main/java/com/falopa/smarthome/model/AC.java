@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class AC extends Device {
     private boolean status;
@@ -34,19 +35,25 @@ public class AC extends Device {
     }
 
     public boolean setStatus(boolean status) {
+        final boolean oldStatus = this.status;
         if(status) {
-            if (APIConnector.doAction(id, "turnOn")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "turnOn", new Callback() {
+                @Override
+                public void execute() {
+                    AC.this.status = oldStatus;
+                }
+            });
         }
         else {
-            if (APIConnector.doAction(id, "turnOff")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "turnOff", new Callback() {
+                @Override
+                public void execute() {
+                    AC.this.status = oldStatus;
+                }
+            });
         }
-        return false;
+        this.status = status;
+        return true;
     }
 
     public Integer getTemperature() {
@@ -54,11 +61,15 @@ public class AC extends Device {
     }
 
     public boolean setTemperature(Integer temperature) {
-        if(APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature))) {
-            this.temperature = temperature;
-            return true;
-        }
-        return false;
+        final int oldTemp = this.temperature;
+        APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
+            @Override
+            public void execute() {
+                AC.this.temperature = oldTemp;
+            }
+        });
+        this.temperature = temperature;
+        return true;
     }
 
     public String getMode() {
@@ -66,11 +77,15 @@ public class AC extends Device {
     }
 
     public boolean setMode(String mode) {
-        if(APIConnector.doAction(id, "setMode", new StringParam(mode))) {
-            this.mode = mode;
-            return true;
-        }
-        return false;
+        final String oldMode = this.mode;
+        APIConnector.doAction(id, "setMode", new StringParam(mode), new Callback() {
+            @Override
+            public void execute() {
+                AC.this.mode = oldMode;
+            }
+        });
+        this.mode = mode;
+        return true;
     }
 
     public String getVerticalSwing() {
@@ -78,11 +93,15 @@ public class AC extends Device {
     }
 
     public boolean setVerticalSwing(String verticalSwing) {
-        if(APIConnector.doAction(id, "setVerticalSwing", new StringParam(verticalSwing))) {
-            this.verticalSwing = verticalSwing;
-            return true;
-        }
-        return false;
+        final String oldVerticalSwing = this.verticalSwing;
+        APIConnector.doAction(id, "setVerticalSwing", new StringParam(verticalSwing), new Callback() {
+            @Override
+            public void execute() {
+                AC.this.verticalSwing = oldVerticalSwing;
+            }
+        });
+        this.verticalSwing = verticalSwing;
+        return true;
     }
 
     public String getHorizontalSwing() {
@@ -90,11 +109,15 @@ public class AC extends Device {
     }
 
     public boolean setHorizontalSwing(String horizontalSwing) {
-        if(APIConnector.doAction(id, "setHorizontalSwing", new StringParam(horizontalSwing))) {
-            this.horizontalSwing = horizontalSwing;
-            return true;
-        }
-        return false;
+        final String oldHorizontalSwing = this.horizontalSwing;
+        APIConnector.doAction(id, "setHorizontalSwing", new StringParam(horizontalSwing), new Callback() {
+            @Override
+            public void execute() {
+                AC.this.horizontalSwing = oldHorizontalSwing;
+            }
+        });
+        this.horizontalSwing = horizontalSwing;
+        return true;
     }
 
     public String getFanSpeed() {
@@ -102,10 +125,14 @@ public class AC extends Device {
     }
 
     public boolean setFanSpeed(String fanSpeed) {
-        if(APIConnector.doAction(id, "setFanSpeed", new StringParam(fanSpeed))) {
-            this.fanSpeed = fanSpeed;
-            return true;
-        }
-        return false;
+        final String oldFanSpeed = this.fanSpeed;
+        APIConnector.doAction(id, "setFanSpeed", new StringParam(fanSpeed), new Callback() {
+            @Override
+            public void execute() {
+                AC.this.fanSpeed = oldFanSpeed;
+            }
+        });
+        this.fanSpeed = fanSpeed;
+        return true;
     }
 }

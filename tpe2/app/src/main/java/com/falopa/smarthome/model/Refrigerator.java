@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class Refrigerator extends Device {
     private Integer freezerTemperature;
@@ -31,11 +32,15 @@ public class Refrigerator extends Device {
     }
 
     public boolean setFreezerTemperature(Integer freezerTemperature) {
-        if(APIConnector.doAction(id, "setFreezerTemperature", new IntegerParam(freezerTemperature))) {
-            this.freezerTemperature = freezerTemperature;
-            return true;
-        }
-        return false;
+        final int oldTemp = this.freezerTemperature;
+        APIConnector.doAction(id, "setFreezerTemperature", new IntegerParam(freezerTemperature), new Callback() {
+            @Override
+            public void execute() {
+                Refrigerator.this.freezerTemperature = oldTemp;
+            }
+        });
+        this.freezerTemperature = freezerTemperature;
+        return true;
     }
 
     public Integer getTemperature() {
@@ -43,11 +48,15 @@ public class Refrigerator extends Device {
     }
 
     public boolean setTemperature(Integer temperature) {
-        if(APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature))) {
-            this.temperature = temperature;
-            return true;
-        }
-        return false;
+        final int oldTemp = this.temperature;
+        APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
+            @Override
+            public void execute() {
+                Refrigerator.this.temperature = oldTemp;
+            }
+        });
+        this.temperature = temperature;
+        return true;
     }
 
     public String getMode() {
@@ -55,10 +64,14 @@ public class Refrigerator extends Device {
     }
 
     public boolean setMode(String mode) {
-        if(APIConnector.doAction(id, "setMode", new StringParam(mode))) {
-            this.mode = mode;
-            return true;
-        }
-        return false;
+        final String oldMode = this.mode;
+        APIConnector.doAction(id, "setMode", new StringParam(mode), new Callback() {
+            @Override
+            public void execute() {
+                Refrigerator.this.mode = oldMode;
+            }
+        });
+        this.mode = mode;
+        return true;
     }
 }

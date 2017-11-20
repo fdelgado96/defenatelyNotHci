@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class Timer extends Device {
     private boolean status;
@@ -31,19 +32,25 @@ public class Timer extends Device {
     }
 
     public boolean setStatus(boolean status) {
+        final boolean oldStatus = this.status;
         if(status) {
-            if (APIConnector.doAction(id, "start")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "start", new Callback() {
+                @Override
+                public void execute() {
+                    Timer.this.status = oldStatus;
+                }
+            });
         }
         else {
-            if (APIConnector.doAction(id, "stop")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "stop", new Callback() {
+                @Override
+                public void execute() {
+                    Timer.this.status = oldStatus;
+                }
+            });
         }
-        return false;
+        this.status = status;
+        return true;
     }
 
     public Integer getInterval() {
@@ -51,11 +58,15 @@ public class Timer extends Device {
     }
 
     public boolean setInterval(Integer interval) {
-        if(APIConnector.doAction(id, "setInterval", new IntegerParam(interval))) {
-            this.interval = interval;
-            return true;
-        }
-        return false;
+        final int oldInterval = this.interval;
+        APIConnector.doAction(id, "setInterval", new IntegerParam(interval), new Callback() {
+            @Override
+            public void execute() {
+                Timer.this.interval = oldInterval;
+            }
+        });
+        this.interval = interval;
+        return true;
     }
 
     public Integer getRemaining() {

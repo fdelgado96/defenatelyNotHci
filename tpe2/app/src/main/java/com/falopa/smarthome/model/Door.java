@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class Door extends Device {
     private boolean status;
@@ -30,19 +31,25 @@ public class Door extends Device {
     }
 
     public boolean setStatus(boolean status) {
+        final boolean oldStatus = this.status;
         if(status) {
-            if (APIConnector.doAction(id, "open")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "open", new Callback() {
+                @Override
+                public void execute() {
+                    Door.this.status = oldStatus;
+                }
+            });
         }
         else {
-            if (APIConnector.doAction(id, "close")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "close", new Callback() {
+                @Override
+                public void execute() {
+                    Door.this.status = oldStatus;
+                }
+            });
         }
-        return false;
+        this.status = status;
+        return true;
     }
 
     public boolean isLocked() {
@@ -50,18 +57,24 @@ public class Door extends Device {
     }
 
     public boolean setLocked(boolean locked) {
+        final boolean oldLocked = this.locked;
         if(locked) {
-            if (APIConnector.doAction(id, "lock")) {
-                this.locked = locked;
-                return true;
-            }
+            APIConnector.doAction(id, "lock", new Callback() {
+                @Override
+                public void execute() {
+                    Door.this.locked = oldLocked;
+                }
+            });
         }
         else {
-            if (APIConnector.doAction(id, "unlock")) {
-                this.locked = locked;
-                return true;
-            }
+            APIConnector.doAction(id, "unlock", new Callback() {
+                @Override
+                public void execute() {
+                    Door.this.locked = oldLocked;
+                }
+            });
         }
-        return false;
+        this.locked = locked;
+        return true;
     }
 }

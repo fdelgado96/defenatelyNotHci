@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class Oven extends Device {
     private boolean status;
@@ -35,18 +36,26 @@ public class Oven extends Device {
 
     public boolean setStatus(boolean status) {
         if(status) {
-            if (APIConnector.doAction(id, "turnOn")) {
-                this.status = status;
-                return true;
-            }
+            final boolean oldStatus = this.status;
+            APIConnector.doAction(id, "turnOn", new Callback() {
+                @Override
+                public void execute() {
+                    Oven.this.status = oldStatus;
+                }
+            });
+            this.status = status;
         }
         else {
-            if (APIConnector.doAction(id, "turnOff")) {
-                this.status = status;
-                return true;
-            }
+            final boolean oldStatus = this.status;
+            APIConnector.doAction(id, "turnOff", new Callback() {
+                @Override
+                public void execute() {
+                    Oven.this.status = oldStatus;
+                }
+            });
+            this.status = status;
         }
-        return false;
+        return true;
     }
 
     public Integer getTemperature() {
@@ -54,11 +63,15 @@ public class Oven extends Device {
     }
 
     public boolean setTemperature(Integer temperature) {
-        if(APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature))) {
-            this.temperature = temperature;
-            return true;
-        }
-        return false;
+        final int oldTemp = this.temperature;
+        APIConnector.doAction(id, "setTemperature", new IntegerParam(temperature), new Callback() {
+            @Override
+            public void execute() {
+                Oven.this.temperature = oldTemp;
+            }
+        });
+        this.temperature = temperature;
+        return true;
     }
 
     public String getHeat() {
@@ -66,11 +79,15 @@ public class Oven extends Device {
     }
 
     public boolean setHeat(String heat) {
-        if(APIConnector.doAction(id, "setHeat", new StringParam(heat))) {
-            this.heat = heat;
-            return true;
-        }
-        return false;
+        final String oldHeat = this.heat;
+        APIConnector.doAction(id, "setHeat", new StringParam(heat), new Callback() {
+            @Override
+            public void execute() {
+                Oven.this.heat = oldHeat;
+            }
+        });
+        this.heat = heat;
+        return true;
     }
 
     public String getGrill() {
@@ -78,11 +95,15 @@ public class Oven extends Device {
     }
 
     public boolean setGrill(String grill) {
-        if(APIConnector.doAction(id, "setGrill", new StringParam(grill))) {
-            this.grill = grill;
-            return true;
-        }
-        return false;
+        final String oldGrill = this.grill;
+        APIConnector.doAction(id, "setGrill", new StringParam(grill), new Callback() {
+            @Override
+            public void execute() {
+                Oven.this.grill = oldGrill;
+            }
+        });
+        this.grill = grill;
+        return true;
     }
 
     public String getConvection() {
@@ -90,10 +111,14 @@ public class Oven extends Device {
     }
 
     public boolean setConvection(String convection) {
-        if(APIConnector.doAction(id, "setConvection", new StringParam(convection))) {
-            this.convection = convection;
-            return true;
-        }
-        return false;
+        final String oldConv = this.convection;
+        APIConnector.doAction(id, "setConvection", new StringParam(convection), new Callback() {
+            @Override
+            public void execute() {
+                Oven.this.convection = oldConv;
+            }
+        });
+        this.convection = convection;
+        return true;
     }
 }

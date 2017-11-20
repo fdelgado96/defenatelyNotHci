@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 import java.util.ArrayList;
 
@@ -34,31 +35,49 @@ public class Alarm extends Device {
         ArrayList<Param> params = new ArrayList<>();
         params.add(new StringParam(oldCode));
         params.add(new StringParam(newCode));
-        return APIConnector.doAction(id, "changeSecurityCode", params);
+        APIConnector.doAction(id, "changeSecurityCode", params, new Callback() {
+            @Override
+            public void execute() {
+                //Toast
+            }
+        });
+        return true;
     }
 
     public boolean armStay(String code) {
-        if(APIConnector.doAction(id, "armStay", new StringParam(code))) {
-            this.status = "armedStay";
-            return true;
-        }
-        return false;
+        final String oldStatus = this.status;
+        APIConnector.doAction(id, "armStay", new StringParam(code), new Callback() {
+            @Override
+            public void execute() {
+                Alarm.this.status = oldStatus;
+            }
+        });
+        this.status = "armedStay";
+        return true;
     }
 
     public boolean armAway(String code) {
-        if(APIConnector.doAction(id, "armAway", new StringParam(code))) {
-            this.status = "armedAway";
-            return true;
-        }
-        return false;
+        final String oldStatus = this.status;
+        APIConnector.doAction(id, "armAway", new StringParam(code), new Callback() {
+            @Override
+            public void execute() {
+                Alarm.this.status = oldStatus;
+            }
+        });
+        this.status = "armedAway";
+        return true;
     }
 
     public boolean disarm(String code) {
-        if(APIConnector.doAction(id, "disarm", new StringParam(code))) {
-            this.status = "disarmed";
-            return true;
-        }
-        return false;
+        final String oldStatus = this.status;
+        APIConnector.doAction(id, "disarm", new StringParam(code), new Callback() {
+            @Override
+            public void execute() {
+                Alarm.this.status = oldStatus;
+            }
+        });
+        this.status = "disarmed";
+        return true;
     }
 
 }

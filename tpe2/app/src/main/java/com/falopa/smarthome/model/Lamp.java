@@ -2,6 +2,7 @@ package com.falopa.smarthome.model;
 
 
 import com.falopa.smarthome.utils.APIConnector;
+import com.falopa.smarthome.utils.Callback;
 
 public class Lamp extends Device {
     private boolean status;
@@ -31,19 +32,25 @@ public class Lamp extends Device {
     }
 
     public boolean setStatus(boolean status) {
+        final boolean oldStatus = this.status;
         if(status) {
-            if (APIConnector.doAction(id, "turnOn")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "turnOn", new Callback() {
+                @Override
+                public void execute() {
+                    Lamp.this.status = oldStatus;
+                }
+            });
         }
         else {
-            if (APIConnector.doAction(id, "turnOff")) {
-                this.status = status;
-                return true;
-            }
+            APIConnector.doAction(id, "turnOff", new Callback() {
+                @Override
+                public void execute() {
+                    Lamp.this.status = oldStatus;
+                }
+            });
         }
-        return false;
+        this.status = status;
+        return true;
     }
 
     public String getColor() {
@@ -51,11 +58,15 @@ public class Lamp extends Device {
     }
 
     public boolean setColor(String color) {
-        if(APIConnector.doAction(id, "changeColor", new StringParam(color))) {
-            this.color = color;
-            return true;
-        }
-        return false;
+        final String oldColor = this.color;
+        APIConnector.doAction(id, "changeColor", new StringParam(color), new Callback() {
+            @Override
+            public void execute() {
+                Lamp.this.color = oldColor;
+            }
+        });
+        this.color = color;
+        return true;
     }
 
     public Integer getBrightness() {
@@ -63,10 +74,14 @@ public class Lamp extends Device {
     }
 
     public boolean setBrightness(Integer brightness) {
-        if(APIConnector.doAction(id, "changeBrightness", new IntegerParam(brightness))) {
-            this.brightness = brightness;
-            return true;
-        }
-        return false;
+        final int oldBright = this.brightness;
+        APIConnector.doAction(id, "changeBrightness", new IntegerParam(brightness), new Callback() {
+            @Override
+            public void execute() {
+                Lamp.this.brightness = oldBright;
+            }
+        });
+        this.brightness = brightness;
+        return true;
     }
 }

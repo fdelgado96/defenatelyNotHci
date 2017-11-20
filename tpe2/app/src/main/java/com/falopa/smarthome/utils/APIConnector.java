@@ -8,19 +8,20 @@ import java.util.ArrayList;
 
 public class APIConnector {
 
-    public static boolean doAction(String deviceId, String actionName) {
+    public static boolean doAction(String deviceId, String actionName, Callback rollback) {
         // ret is boolean ? return ret : return ret != null
         return false;
     }
 
-    public static boolean doAction(String deviceId, String actionName, Param param) {
+    public static boolean doAction(String deviceId, String actionName, Param param, Callback rollback) {
         return false;
     }
-    public static boolean doAction(String deviceId, String actionName, ArrayList<Param> params) {
+    public static boolean doAction(String deviceId, String actionName, ArrayList<Param> params, Callback rollback) {
         return false;
     }
 
     public static JsonObject getState(String deviceId) {
         return null;
     }
+
 }
