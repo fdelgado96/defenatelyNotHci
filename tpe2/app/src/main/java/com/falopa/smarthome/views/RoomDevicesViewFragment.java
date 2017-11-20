@@ -27,6 +27,7 @@ import java.util.LinkedList;
 
 public class RoomDevicesViewFragment extends ListFragment {
 
+
     String id;
     ArrayList<Device> deviceList = new ArrayList<>();
     /**
@@ -69,8 +70,9 @@ public class RoomDevicesViewFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Device[] devices = new Device[]{
-                new Door("12312","Door", new DeviceType("1231","lel",null), "123123"),
-                new Alarm("12312","Alarm", new DeviceType("1231","lel",null), "123123")
+                new Alarm("12312","Alarm", new DeviceType("1231","lel",null), "123123") ,
+                new Door("12312","Door", new DeviceType("1231","lel",null), "123123")
+
         };
 
         super.onActivityCreated(savedInstanceState);

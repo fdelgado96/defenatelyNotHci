@@ -25,8 +25,10 @@
 
     <Switch
         android:id="@+id/activation_switch"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/tab_label"
         android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_weight="1" />

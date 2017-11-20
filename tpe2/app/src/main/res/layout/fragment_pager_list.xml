@@ -15,8 +15,8 @@
              find it -->
         <ListView android:id="@android:id/list"
             android:layout_width="match_parent"
+            android:divider="@color/list_divider"
             android:layout_height="match_parent"
-            android:divider="@color/colorAccent"
             android:drawSelectorOnTop="false"/>
 
         <!-- Here is the view to show if the list is emtpy -->

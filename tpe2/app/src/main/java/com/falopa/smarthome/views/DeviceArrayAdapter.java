@@ -57,6 +57,7 @@ public class DeviceArrayAdapter extends ArrayAdapter<Device> {
                             changeDeviceState(device,isChecked);
                         }
                     });
+            holder.activationSwitch.setChecked(getDeviceState(device));
         }else{
 
             if (convertView == null) {
@@ -79,6 +80,40 @@ public class DeviceArrayAdapter extends ArrayAdapter<Device> {
         if(device instanceof Alarm || device instanceof Refrigerator)
             return false;
         else return true;
+    }
+
+    public boolean getDeviceState(Device device){
+        Log.d("s", "getDeviceState: ");
+        if(device instanceof AC) {
+            AC aux = (AC) device;
+            return aux.getStatus();
+        }
+        if(device instanceof Oven) {
+            Oven aux = (Oven) device;
+            return aux.getStatus();
+        }
+        if(device instanceof Blind) {
+            Blind aux = (Blind) device;
+            if("open"==aux.getStatus() || "opening"==aux.getStatus())
+                return true;
+            else
+                return false;
+        }
+        if(device instanceof Lamp) {
+            Lamp aux = (Lamp) device;
+            return aux.getStatus();
+        }
+        if(device instanceof Timer) {
+            Timer aux = (Timer) device;
+            return aux.getStatus();
+        }
+
+        if(device instanceof Door){
+            Door aux = (Door) device;
+            return aux.getStatus();
+        }
+        return false;
+
     }
 
     public void changeDeviceState(Device device,boolean state){
