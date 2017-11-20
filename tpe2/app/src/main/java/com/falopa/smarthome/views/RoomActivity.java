@@ -28,6 +28,9 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms);
 
+        Intent intent = getIntent();
+        setTitle(intent.getStringExtra(MainActivity.EXTRA_ROOM_NAME));
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,13 +49,5 @@ public class RoomActivity extends AppCompatActivity {
         mAdapter.addFragment(new RoomDevicesViewFragment(), "Funciones Personalizadas");
         viewPager.setAdapter(mAdapter);
     }
-
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        startActivity(new Intent(RoomActivity.this, MainActivity.class));
-        finish();
-    }
-
 
 }

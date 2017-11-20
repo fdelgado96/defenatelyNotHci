@@ -23,13 +23,4 @@
         android:ellipsize="end"
         android:singleLine="true" />
 
-    <Switch
-        android:id="@+id/activation_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_weight="1" />
-
-
 </LinearLayout>

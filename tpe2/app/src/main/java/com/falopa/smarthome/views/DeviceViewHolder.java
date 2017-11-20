@@ -1,5 +1,6 @@
 package com.falopa.smarthome.views;
 
+import android.widget.Switch;
 import android.widget.TextView;
 
 /**
@@ -8,5 +9,6 @@ import android.widget.TextView;
 
 public class DeviceViewHolder {
     public TextView nameTextView;
+    public Switch activationSwitch;
 
 }

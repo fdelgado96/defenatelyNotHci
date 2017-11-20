@@ -22,7 +22,11 @@
         <activity
             android:name=".views.RoomActivity"
             android:label="@string/title_activity_room"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.falopa.smarthome.views.MainActivity" />
+        </activity>
         <activity android:name=".views.NewRoom" android:label="@string/new_room">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -19,6 +19,8 @@ import com.falopa.smarthome.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final static String EXTRA_ROOM_NAME = com.falopa.smarthome.views.MainActivity.EXTRA_ROOM_NAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             Intent intent = new Intent(this,RoomActivity.class);
+            intent.putExtra(EXTRA_ROOM_NAME,"Cocina");
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(this, NewRoom.class);

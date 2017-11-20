@@ -11,11 +11,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.falopa.smarthome.R;
+import com.falopa.smarthome.model.Alarm;
 import com.falopa.smarthome.model.Device;
 import com.falopa.smarthome.model.DeviceType;
 import com.falopa.smarthome.model.Door;
 import com.falopa.smarthome.model.Home;
 import com.falopa.smarthome.model.Room;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Francisco Delgado on 11/19/2017.
@@ -24,7 +28,7 @@ import com.falopa.smarthome.model.Room;
 public class RoomDevicesViewFragment extends ListFragment {
 
     String id;
-
+    ArrayList<Device> deviceList = new ArrayList<>();
     /**
      * Create a new instance of CountingFragment, providing "num"
      * as an argument.
@@ -47,6 +51,7 @@ public class RoomDevicesViewFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getArguments() != null ? getArguments().getString("id") : "";
+//        deviceList = Home.getRoom(id).getDevices();
     }
 
     /**
@@ -64,7 +69,8 @@ public class RoomDevicesViewFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Device[] devices = new Device[]{
-                new Door("12312","tuvieja", new DeviceType("1231","lel",null), "123123")
+                new Door("12312","Door", new DeviceType("1231","lel",null), "123123"),
+                new Alarm("12312","Alarm", new DeviceType("1231","lel",null), "123123")
         };
 
         super.onActivityCreated(savedInstanceState);
