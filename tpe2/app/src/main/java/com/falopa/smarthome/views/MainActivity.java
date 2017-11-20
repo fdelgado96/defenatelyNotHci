@@ -25,6 +25,9 @@ import com.falopa.smarthome.utils.Callback;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
+    private final int FUNCION_P_ID = 9999;
+    private final int AGREGAR_AMB_ID = 8888;
+ 
 
     public final static String EXTRA_ROOM_NAME = com.falopa.smarthome.views.MainActivity.EXTRA_ROOM_NAME;
 
@@ -41,15 +44,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,6 +52,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        
+        Menu menu = navigationView.getMenu();
+        menu.add(0,FUNCION_P_ID,0,"Funciones Personalizadas");
+        menu.add(0,AGREGAR_AMB_ID,0,"Agregar Ambiente");
+        drawer.closeDrawers();
 
         //Progress dialog
         Home.init(new Callback() {
@@ -73,6 +72,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+    public void addMenuRoom(String roomName, int roomid) {
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        menu.add(0, roomid, 0, roomName);
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -142,6 +149,61 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    
+    /*
+     @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        int itemID = item.getItemId();
+        Fragment fragment = null;
+        boolean isRoomItem = false;
+
+        if(itemID == AGREGAR_AMB_ID) { 
+            //fragment = new Agregar Ambiente Fragment
+        }
+        else if(itemID == FUNCION_P_ID) { 
+            //fragment = new Funciones Personalizadas Fragment
+        }
+        else { //Agregar ambiente
+           // fragment = new RoomFragment();
+            isRoomItem = true;
+
+        }
+        
+        if(fragment != null) {
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu menu = navigationView.getMenu();
+            int size = menu.size();
+
+            for(int i=0 ; i<size ; i++) { 
+                MenuItem menuItem = menu.getItem(i);
+                if(!item.equals(menuItem)) {
+                    menuItem.setChecked(false);
+                }
+            }
+
+            if(isRoomItem) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("roomid", String.valueOf(item.getItemId()));
+                fragment.setArguments(bundle);
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commit();
+            item.setChecked(true);
+
+            getSupportActionBar().setTitle(item.getTitle());
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+    */
 
 
     private void setupViewPager(ViewPager viewPager) {
